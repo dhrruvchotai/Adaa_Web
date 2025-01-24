@@ -1,0 +1,80 @@
+.modal-backdrop-custom {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.navbar-nav .logout-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-nav .logout-btn:hover {
+  background-color: #e53935;
+  transform: translateY(-3px);
+}
+
+.navbar-nav .logout-btn:active {
+  background-color: #d32f2f;
+  transform: translateY(1px);
+}
+
+.chatbot {
+  width: 430px;
+  font-family: Arial, sans-serif;
+}
+
+.chat-window {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f9f9f9;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.chat-box {
+  padding: 10px;
+  height: 400px;
+  overflow-y: auto;
+}
+
+.message {
+  margin: 5px 0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  max-width: 90%;
+}
+
+.message.user {
+  background: #e0f7fa;
+  align-self: flex-end;
+}
+
+.message.bot {
+  background: #fff3e0;
+  align-self: flex-start;
+}
+
+.options-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+}
+
+.option-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.option-button:hover {
+  background: #0056b3;
+}
