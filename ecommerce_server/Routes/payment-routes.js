@@ -1,5 +1,7 @@
 const express = require("express");
-const stripe = require("stripe")("sk_test_51QiIllP7psTNMuKWlw3RGJlaBKK5ndo0bIKBj4YAHTbOvAoMDfbDzv6XQjlKBHotc8iFEMxLBZEi2ejnYIIcknKt00mSkN7IN8");
+require('dotenv').config();
+
+const stripe = require("stripe")(process.env.PAYMENT_KEY);
 const router = express.Router();
 
 const coupons = [
@@ -11,7 +13,6 @@ const coupons = [
 router.post('/verify-coupon', (req, res) => {
     const { couponCode } = req.body;
 
-    // Find the coupon in the list
     const coupon = coupons.find(c => c.code.toUpperCase() === couponCode.toUpperCase());
 
     if (coupon) {
@@ -34,7 +35,6 @@ router.post("/create-payment-intent", async (req, res) => {
     try {
         const { totalAmount } = req.body;
 
-        // Create a PaymentIntent with the order amount
         const paymentIntent = await stripe.paymentIntents.create({
             amount: totalAmount * 100, // Stripe expects the amount in cents
             currency: "inr", // or any other currency you are using

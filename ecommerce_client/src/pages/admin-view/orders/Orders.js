@@ -29,8 +29,18 @@ function AdminOrders() {
 
     const handleOrderClick = (order) => {
         const enrichedItems = order.Items.map((item) => {
-            const productDetails = orderItems.find((product) => product.No === item);
-            return { ...item, productDetails };
+            const productDetails = orderItems.find(
+                (product) => product.No === item.No
+            );
+    
+            if (productDetails) {
+                return {
+                    ...item,
+                    productDetails,
+                };
+            } else {
+                return item;
+            }
         });
         setSelectedOrder({ ...order, enrichedItems });
     };

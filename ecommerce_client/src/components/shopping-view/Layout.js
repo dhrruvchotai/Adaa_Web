@@ -4,6 +4,7 @@ import useUserDetails from "../../pages/useUserDetails";
 import { getCartByEmail } from "../../pages/shopping-view/API";
 import Chatbot from "../../components/shopping-view/Chatbot";
 import { useNavigate } from 'react-router-dom';
+import './style.css';
 
 function ShoppingLayout() {
     const location = useLocation();
@@ -127,7 +128,7 @@ function ShoppingLayout() {
                             </li>
                             <li className="nav-item">
                                 <Link
-                                    className={`nav-link me-2 ${location.pathname === "/shopping/search" &&
+                                    className={`nav-link me-2 ${location.pathname === "/shopping/wishlist" &&
                                         !selectedCategory
                                         ? "fw-bold"
                                         : ""
@@ -139,7 +140,7 @@ function ShoppingLayout() {
                             </li>
                         </ul>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li className="nav-item pt-1">
+                            <li className="nav-item pt-1 mb-1">
                                 <Link
                                     to="/shopping/cart"
                                     style={{
@@ -162,7 +163,7 @@ function ShoppingLayout() {
                                     )}
                                 </Link>
                             </li>
-                            <li className="nav-item pt-1">
+                            <li className="nav-item pt-1 mb-2">
                                 <Link
                                     to="/shopping/account"
                                     style={{
@@ -205,8 +206,8 @@ function ShoppingLayout() {
                         position: "fixed",
                         bottom: "20px",
                         right: "20px",
-                        width: "60px",
-                        height: "60px",
+                        width: "70px",
+                        height: "70px",
                         borderRadius: "50%",
                         backgroundColor: "#00796b",
                         color: "#fff",
@@ -242,20 +243,7 @@ function ShoppingLayout() {
                 {/* Chatbot Container */}
                 {isChatbotOpen && (
                     <div
-                        style={{
-                            position: "fixed",
-                            bottom: "90px",
-                            right: "20px",
-                            width: "430px",
-                            height: "600px",
-                            border: "1px solid #ccc",
-                            borderRadius: "10px",
-                            backgroundColor: "#fff",
-                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
-                            zIndex: 1000,
-                            overflow: "hidden",
-
-                        }}
+                        className="chatbot-container"
                     >
                         <Chatbot setIsChatbotOpen={setIsChatbotOpen} />
                     </div>

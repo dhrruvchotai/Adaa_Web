@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import useUserDetails from "../../pages/useUserDetails";
-import { getWishlistByEmail, getProductByIdForWishlist } from "../../pages/shopping-view/API";
-import ProductCard from "./ProductCard";
+import useUserDetails from "../../useUserDetails";
+import { getWishlistByEmail, getProductByIdForWishlist } from "../API";
+import ProductCard from "../../../components/shopping-view/ProductCard";
 
 function WishlistPage() {
     const { userData, isUserDataReady } = useUserDetails();
@@ -15,21 +15,17 @@ function WishlistPage() {
                 setLoading(true);
                 setError(null);
                 try {
-                    console.log('Email:', userData.Email);
-                    
                     const response = await getWishlistByEmail(userData.Email);
-                    console.log('Wishlist response:', response); // Check the raw response
 
-                    // If the wishlist is empty or has products, fetch the details for each product
                     if (response && response.wishlist) {
                         const productIds = response.wishlist;
                         const products = await Promise.all(
                             productIds.map(async (productId) => {
                                 const productData = await getProductByIdForWishlist(productId);
-                                return productData; // Return the product data
+                                return productData;
                             })
                         );
-                        setWishlistProducts(products);  // Set full product data
+                        setWishlistProducts(products);
                     }
                 } catch (err) {
                     setError("Failed to fetch wishlist. Please try again.");
@@ -53,14 +49,17 @@ function WishlistPage() {
 
     return (
         <div className="container py-5">
-            <h3>Your Wishlist</h3>
+            <div className="row">
+                <h3 className="fw-bold fs-2 mt-1 mb-3">Your Wishlist</h3>
+                <hr />
+            </div>
             <div className="row">
                 {wishlistProducts.length === 0 ? (
                     <p>No items in your wishlist.</p>
                 ) : (
                     wishlistProducts.map((product) => (
-                        <div key={product._id} className="col-md-4">
-                            <ProductCard productId={product._id} />  {/* Pass product ID */}
+                        <div key={product._id} className="col-md-3">
+                            <ProductCard productId={product._id} />
                         </div>
                     ))
                 )}

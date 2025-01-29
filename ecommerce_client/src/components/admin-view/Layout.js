@@ -43,10 +43,10 @@ function AdminLayout() {
                             </h3>
                         </div>
                         <div className="offcanvas-body">
-                            <ul className="navbar-nav me-auto mb-2 mb-lg-0 fs-5">
-                                <li className="nav-item">
+                            <ul className="navbar-nav nav-admin me-auto mb-2 mb-lg-0 fs-5">
+                                <li className="nav-item item">
                                     <NavLink
-                                        className="nav-link p-2 mb-1"
+                                        className="nav-link link p-2 mb-1"
                                         to="/admin"
                                         end
                                         style={({ isActive }) => ({
@@ -56,9 +56,9 @@ function AdminLayout() {
                                         <i className="fa-solid fa-boxes-stacked me-3"></i>Dashboard
                                     </NavLink>
                                 </li>
-                                <li className="nav-item">
+                                <li className="nav-item item">
                                     <NavLink
-                                        className="nav-link p-2 mb-1"
+                                        className="nav-link link p-2 mb-1"
                                         to="/admin/products"
                                         style={({ isActive }) => ({
                                             color: isActive ? "black" : "grey",
@@ -67,9 +67,9 @@ function AdminLayout() {
                                         <i className="fa-solid fa-basket-shopping me-3"></i>Products
                                     </NavLink>
                                 </li>
-                                <li className="nav-item">
+                                <li className="nav-item item">
                                     <NavLink
-                                        className="nav-link p-2 mb-1"
+                                        className="nav-link link p-2 mb-1"
                                         to="/admin/orders"
                                         style={({ isActive }) => ({
                                             color: isActive ? "black" : "grey",
@@ -83,12 +83,12 @@ function AdminLayout() {
                     </div>
                 </div>
                 <div className="main col-md-10 col-12 ps-md-5">
-                    <nav className="navbar">
+                    <nav className="navbar admin-navbar">
                         <div className="container-fluid">
                             <button className="navbar-toggler me-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
-                            <button className='btn btn-lg ms-auto btn-dark' onClick={logout}>
+                            <button className='btn btn-lg ms-auto btn-dark btn-logout-admin' onClick={logout}>
                                 <i className="fa-solid fa-right-from-bracket me-3"></i>Logout
                             </button>
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">

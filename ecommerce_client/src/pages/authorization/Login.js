@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { checkUser } from './API';
 import Swal from 'sweetalert2';
 import { useUser } from './UserContext';
@@ -88,7 +88,6 @@ function Login() {
     };
 
     const handleForgotPassword = async (e) => {
-        console.log('Forgot');
         navigate('/auth/forgot-password')
     }
 

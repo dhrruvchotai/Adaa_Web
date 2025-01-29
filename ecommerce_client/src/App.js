@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserContext } from './pages/authorization/UserContext';
-import { ImageProvider } from "./pages/ImageContext";
 import CheckAuthorization from "./components/common/CheckAuthorization";
 import AdminLayout from "./components/admin-view/Layout";
 import AuthorizationLayout from "./components/authorization/Layout";
@@ -16,10 +15,11 @@ import ShoppingHome from "./pages/shopping-view/home/Home";
 import ShoppingAccount from "./pages/shopping-view/account/Account";
 import ShoppingCart from "./pages/shopping-view/cart/Cart";
 import ShoppingListing from "./pages/shopping-view/listing/Listing";
+import ShoppingProductDescription from "./pages/shopping-view/listing/ProductDescription";
 import ShoppingSearch from "./pages/shopping-view/search/Search";
 import ShoppingCheckout from "./pages/shopping-view/checkout/Checkout";
 import ForgotPassword from './pages/authorization/ForgotPassword'
-import WishlistPage from './components/shopping-view/Wishlist'
+import WishlistPage from './pages/shopping-view/wishlist/Wishlist'
 import Home from "./pages/Home";
 
 function App() {
@@ -27,7 +27,6 @@ function App() {
     const { isAuthenticated, user } = useContext(UserContext);
 
     return (
-        <ImageProvider>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -67,6 +66,7 @@ function App() {
                         <Route path="account" element={<ShoppingAccount />} />
                         <Route path="cart" element={<ShoppingCart />} />
                         <Route path="listing" element={<ShoppingListing />} />
+                        <Route path="listing/:productid" element={<ShoppingProductDescription />} />
                         <Route path="search" element={<ShoppingSearch />} />
                         <Route path="checkout" element={<ShoppingCheckout />} />
                         <Route path="wishlist" element={<WishlistPage />} />
@@ -74,7 +74,6 @@ function App() {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>
-        </ImageProvider>
     );
 }
 

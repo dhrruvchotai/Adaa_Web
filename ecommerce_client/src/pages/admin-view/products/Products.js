@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchProducts, deleteProduct, renumberProducts } from "../API";
+import { fetchProducts, deleteProduct, renumberProducts, updateStockAPI } from "../API";
 import Swal from 'sweetalert2';
 import ProductDescription from "../../../components/admin-view/ProductDescription";
 import AddProduct from "../../../components/admin-view/AddProduct";
@@ -16,6 +16,25 @@ function AdminProducts() {
 
     const handleProductClick = (product) => {
         setSelectedProduct(product);
+    };
+
+
+    const updateStock = async (productNo, updatedStock) => {
+
+        await updateStockAPI(productNo, updatedStock);
+        
+        setProducts(prevProducts => 
+            prevProducts.map(product => 
+                product.No === productNo 
+                    ? { ...product, Stock: updatedStock } 
+                    : product
+            )
+        );
+        setSelectedProduct(prevProduct => 
+            prevProduct.No === productNo 
+                ? { ...prevProduct, Stock: updatedStock } 
+                : prevProduct
+        );
     };
 
     const closeModal = () => {
@@ -39,6 +58,7 @@ function AdminProducts() {
             if (result.isConfirmed) {
                 await deleteProduct(id);
                 await renumberProducts(id);
+                setProducts(prevProducts => prevProducts.filter(product => product.No !== id));
                 closeModal();
                 Swal.fire({
                     title: 'Deleted!',
@@ -83,10 +103,11 @@ function AdminProducts() {
             </div>
 
             {selectedProduct && (
-                <ProductDescription 
-                    selectedProduct={selectedProduct} 
-                    closeModal={closeModal} 
-                    deleteModal={deleteModal} 
+                <ProductDescription
+                    selectedProduct={selectedProduct}
+                    closeModal={closeModal}
+                    deleteModal={deleteModal}
+                    updateStock={updateStock}
                 />
             )}
 

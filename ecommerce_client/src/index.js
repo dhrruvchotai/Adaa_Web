@@ -4,15 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './pages/authorization/UserContext';
-import { ImageProvider } from './pages/ImageContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <UserProvider>
-      <ImageProvider>
         <App />
-      </ImageProvider>
     </UserProvider>
   </React.StrictMode>
 );

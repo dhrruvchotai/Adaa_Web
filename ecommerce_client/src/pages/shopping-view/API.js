@@ -14,9 +14,9 @@ export const fetchProducts = async () => {
     }
 };
 
-export const getProductByIdForWishlist = async (id) => {
+export const getProductById = async (id) => {
     try {
-        const response = await fetch(`${api}/productsforwishlist/${id}`, { method: "GET" });
+        const response = await fetch(`${api}/products/${id}`, { method: "GET" });
 
         if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -29,6 +29,7 @@ export const getProductByIdForWishlist = async (id) => {
         throw error;
     }
 };
+
 export const getProductByIdForCart = async (id) => {
     try {
         const response = await fetch(`${api}/productsforcart/${id}`, { method: "GET" });
@@ -72,12 +73,10 @@ export const removeFromCartAPI = async (userEmail, productId) => {
 export const getCartByEmail = async (email) => {
     try {
         const res = await fetch(api + '/cart/' + email, { method: "GET" });
-        console.log(res);
         if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
         }
         const data = await res.json();
-        console.log('data : ', data);
         return data;
     } catch (error) {
         console.error("Error in getCartByEmail:", error);
@@ -139,7 +138,7 @@ export const getOrdersByEmail = async (email) => {
     }
 };
 
-export const addToOrder = async ({ email, items, address, paymentMethod, totalAmount }) => {
+export const addToOrder = async ({ email, items, paymentMethod, totalAmount, address }) => {
     const formatOrderDate = () => {
         const date = new Date();
         const day = String(date.getDate()).padStart(2, '0');
@@ -157,9 +156,9 @@ export const addToOrder = async ({ email, items, address, paymentMethod, totalAm
             body: JSON.stringify({
                 email,
                 items,
-                address,
                 paymentMethod,
                 totalAmount,
+                address,
                 orderDate
             }),
         });
@@ -197,7 +196,7 @@ export const getProductStock = async (productNo) => {
         throw error;
     }
 };
-
+   
 export const getRecommendations = async (email) => {
     try {
         const response = await fetch(api + '/recommendations/' + email);
@@ -237,19 +236,6 @@ export const addToWishlistAPI = async (email, productId) => {
     }
 };
 
-export const removeFromWishlistAPI = async (email, productId) => {
-    // Send a request to your server to remove the product from the wishlist
-    const response = await fetch(`${api}/wishlist/remove`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, productId }),
-    });
-    if (!response.ok) {
-        throw new Error('Failed to remove from wishlist');
-    }
-    return response.json();
-};
-
 export const getWishlistByEmail = async (email) => {
     const response = await fetch(`${api}/wishlist/${email}`);
     if (!response.ok) {
@@ -258,3 +244,37 @@ export const getWishlistByEmail = async (email) => {
     return response.json();
 };
 
+export const getProductByIdForWishlist = async (id) => {
+    try {
+        const response = await fetch(`${api}/productsforwishlist/${id}`, { method: "GET" });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Failed to fetch product with ID ${id}:`, error);
+        throw error;
+    }
+};
+
+export const addReviewAPI = async (productNo, username, review) => {
+    const response = await fetch(api+'/add-review/'+productNo, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, review }),
+    });
+    if (!response.ok) {
+        throw new Error("Failed to add review");
+    }
+};
+
+export const getReviewsAPI = async (productNo) => {
+    const response = await fetch(api+'/'+productNo+'/reviews');
+    if (!response.ok) {
+        throw new Error("Failed to fetch reviews");
+    }
+    return response.json();
+};

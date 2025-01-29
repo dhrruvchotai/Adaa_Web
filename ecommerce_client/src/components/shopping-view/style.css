@@ -22,13 +22,26 @@
   transform: translateY(1px);
 }
 
+.chatbot-container {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 430px;
+  height: 530px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow: hidden;
+}
+
 .chatbot {
   width: 430px;
   font-family: Arial, sans-serif;
 }
 
 .chat-window {
-  border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
   background: #f9f9f9;
@@ -38,7 +51,7 @@
 
 .chat-box {
   padding: 10px;
-  height: 400px;
+  height: 350px;
   overflow-y: auto;
 }
 
@@ -46,7 +59,7 @@
   margin: 5px 0;
   padding: 8px 12px;
   border-radius: 4px;
-  max-width: 90%;
+  max-width: 85%;
 }
 
 .message.user {
@@ -77,4 +90,93 @@
 
 .option-button:hover {
   background: #0056b3;
+}
+
+@media(max-width: 455px){
+  .chatbot-container{
+    width: 95vw;
+  }
+  .chatbot{
+    width: 350px;
+  }
+  .chat-box{
+    height: 210px;
+  }
+}
+
+.product-card-wishlist {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px;
+  width: 250px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card-wishlist:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.product-image-wishlist img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-details-wishlist {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.product-title-wishlist {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.product-description-wishlist {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+  flex-grow: 1;
+}
+
+.product-price-wishlist {
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.loading-message {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.review-item {
+  margin-bottom: 1rem;
+}
+
+.review-username {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.review-text {
+  margin-left: 1.5rem;
+  color: #555;
+  font-size: 0.95rem;
 }

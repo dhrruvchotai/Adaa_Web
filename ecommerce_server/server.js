@@ -9,7 +9,8 @@ const cartRouter=require('./Routes/cart-routes');
 const chatRoutes = require('./Routes/chatbot-routes');
 const paymentRoutes = require('./Routes/payment-routes');
 const forgotRoutes = require('./Routes/forgot-routes');
-const wishlistRoutes = require('./Routes/wishlist-routes')
+const wishlistRoutes = require('./Routes/wishlist-routes');
+const bgRoutes = require('./Routes/background-routes');
 
 require('dotenv').config();
 
@@ -27,7 +28,8 @@ mongoose.connect(connectionString).then(() => {
   app.use('/chat', chatRoutes);
   app.use('/', paymentRoutes);
   app.use('/', forgotRoutes);
-  app.use('/', wishlistRoutes)
+  app.use('/', wishlistRoutes);
+  app.use('/', bgRoutes);
 
   app.listen(3001, () => {
     console.log("Server started @ "+3001);

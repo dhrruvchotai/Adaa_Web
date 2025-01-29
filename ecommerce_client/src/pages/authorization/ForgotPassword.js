@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { sendOtpToEmail, verifyOtp, changePassword } from './API'; // These API functions should be implemented
+import { sendOtpToEmail, verifyOtp, changePassword } from './API';
 import { useNavigate } from 'react-router-dom';
+import './style.css';
 
 function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -11,7 +12,6 @@ function ForgotPassword() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Send OTP to user's email
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         if (!/\S+@\S+\.\S+/.test(email)) {
@@ -126,7 +126,7 @@ function ForgotPassword() {
     };    
 
     return (
-        <div className="container px-lg-4">
+        <div className="container forgot-password-container px-lg-4">
             {step === 1 && (
                 <div>
                     <h1 className="text-center">Forgot Password</h1>

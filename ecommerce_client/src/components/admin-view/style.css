@@ -1,196 +1,374 @@
-.nav-link{
-    border-radius: 10px;
+.link{
+  border-radius: 10px;
 }
-.nav-link:hover{
-    background-color: #dee3e0;
+.nav-admin .item .link {
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  padding: 10px 15px;
+  border-radius: 5px;
 }
-#offcanvas{
-    width: 18.5vw;
+
+.nav-admin .item .link:hover,
+.nav-admin .item .link.active {
+  background-color: #17a2b8;
+  color: white;
+}
+#offcanvas {
+  background-color: #343a40;
+  color: white;
+  min-height: 100vh;
+  width: 18.5vw;
+}
+.offcanvas-title {
+  color: #17a2b8;
 }
 .navbar-toggler{
-    display: none;
+  display: none;
 }
+
+.admin-navbar {
+  background-color: #ffffff;
+  padding: 15px;
+}
+
+.navbar-toggler {
+  border: none;
+  background: transparent;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+
+/* Logout Button */
+.btn-logout-admin{
+  background-color: #dc3545;
+  border: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-logout-admin:hover {
+  background-color: #c82333;
+}
+
+.main {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 @media(max-width: 993px){
-    #offcanvas{
-        width: 25vw;
-    }
-    .main{
-        margin-left: 200px;
-    }
+  #offcanvas{
+      width: 25vw;
+  }
+  .main{
+      margin-left: 200px;
+  }
 }
 @media(max-width:767px){
-    .main{
-        margin-left: 0px;
-    }
-    .navbar-toggler{
-        display: block;
-    }
+  .main{
+      margin-left: 0px;
+  }
+  .navbar-toggler{
+      display: block;
+  }
 }
 
 .reactjs-popup-overlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-.popup-content {
-    position: relative;
-    width: 100%;
-    padding: 20px;
-    background: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    font-family: Arial, sans-serif;
-    color: #333;
-  }
-  
-  .popup-content button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #ff5f5f;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 5px 10px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .popup-content button:hover {
-    background: #ff3333;
-  }
-  
-  .popup-content h3 {
-    font-size: 1.5rem;
-    color: #222;
-    margin-bottom: 15px;
-  }
-  
-  .popup-content h4 {
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 10px;
-  }
-  
-  /* Table Styling */
-  .popup-content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 15px 0;
-  }
-  
-  .popup-content table thead {
-    background: #007bff;
-    color: white;
-  }
-  
-  .popup-content table th,
-  .popup-content table td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .popup-content table tr:nth-child(even) {
-    background: #f9f9f9;
-  }
-  
-  .popup-content p {
-    margin: 5px 0;
-  }
-  
-  .popup-content div {
-    margin: 10px 0;
-  }
-  
-  @media (max-width: 768px) {
-    .popup-content {
-      width: 100%;
-      padding: 15px;
-    }
-  
-    .popup-content table {
-      font-size: 0.9rem;
-    }
-  }  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .modal-overlay-add-product {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 .modal-box-add {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    width: 450px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 450px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .modal-box-add h2 {
-    margin-bottom: 20px;
-    text-align: center;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .fg {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .fg label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .fg input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .fa {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .fa button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-family: 'Arial', sans-serif;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
 }
 
 .btnAdd {
-    background-color: #28a745;
-    color: white;
-    transition: background-color 0.3s ease;
+  background-color: #28a745;
+  color: white;
+  transition: background-color 0.3s ease;
 }
 
 .btnAdd:hover {
-    background-color: #218838;
+  background-color: #218838;
 }
 
 .fa button[type="button"] {
-    background-color: #dc3545;
-    color: white;
-    transition: background-color 0.3s ease;
+  background-color: #dc3545;
+  color: white;
+  transition: background-color 0.3s ease;
 }
 
 .fa button[type="button"]:hover {
-    background-color: #c82333;
+  background-color: #c82333;
+}
+
+.modal-box-add {
+width: 600px;
+background-color: #fff;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+}
+
+.form-group {
+display: flex;
+flex-direction: column;
+}
+
+label {
+margin-bottom: 8px;
+font-weight: bold;
+}
+
+input {
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+.form-actions {
+margin-top: 20px;
+display: flex;
+justify-content: space-between;
+}
+
+.btnAdd {
+background-color: #28a745;
+color: white;
+padding: 10px 20px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+.btnAdd:hover {
+background-color: #218838;
+}
+
+button {
+padding: 10px 20px;
+border-radius: 4px;
+border: 1px solid #ccc;
+cursor: pointer;
+}
+
+/* Styles for the container of the div that will act like a popup */
+.order-description-popup-container {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark background */
+  z-index: 999; /* Ensure it's on top */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* When the div is visible, display it as flex */
+.order-description-popup-container.visible {
+  display: flex;
+}
+
+.order-description-popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 25px;
+  background: #ffffff;
+  width: 52%;
+  max-height: 100vh;
+  overflow-y: auto;
+  background-color: #f4f8f7;
+  border: 3px solid #37ab96;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Close button styling */
+.popup-close-btn {
+  align-self: flex-end;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  color: #37ab96;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.popup-close-btn:hover {
+  color: #2f8e7a; /* Slightly darker color on hover */
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+  .order-description-popup {
+    width: 90%; /* Full width on smaller screens */
+    padding: 15px;
+  }
+}
+
+/* Title styles */
+.order-id,
+.products-title {
+  color: #37ab96;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  align-self: center;
+}
+
+.order-date{
+  color: #37ab96;
+  font-size: 1rem;
+  align-self: center;
+  margin-bottom: 15px;
+}
+
+/* Customer details section */
+.customer-details {
+  margin: 20px 0;
+  background-color: #e8f9f4;
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.customer-details .section-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.customer-details .detail {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Table styling for products */
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.products-table th,
+.products-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.products-table th {
+  background-color: #37ab96;
+  color: white;
+  font-weight: bold;
+}
+
+.products-table td {
+  background-color: #f9f9f9;
+}
+
+.products-table tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.products-table td:last-child {
+  font-weight: bold;
+}
+
+/* Payment and total section */
+.payment-method,
+.total-amount {
+  margin-top: 15px;
+  font-size: 1.1rem;
+  color: #37ab96;
+}
+
+/* For small screens, text adjustments */
+@media (max-width: 480px) {
+  .order-description-popup {
+    width: 95%;
+  }
+
+  .popup-close-btn {
+    font-size: 1.25rem;
+  }
+
+  .order-id,
+  .order-date,
+  .products-title {
+    font-size: 1.1rem;
+  }
 }

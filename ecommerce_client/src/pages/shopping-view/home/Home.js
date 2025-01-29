@@ -1,19 +1,12 @@
 import './home-style.css';
-import img1 from '../../../components/Images/img1.jpg';
-import img2 from '../../../components/Images/img2.jpg';
-import img3 from '../../../components/Images/img3.jpg';
-import img4 from '../../../components/Images/img4.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fetchProducts, getRecommendations } from '../API';
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import ProductDescription from '../../../components/shopping-view/ProductDescription';
-import { useImageContext } from '../../ImageContext';
+import ProductDescription from '../listing/ProductDescription';
 import useUserDetails from '../../useUserDetails';
 
 function ShoppingHome() {
-    const initialImages = [img1, img2, img3, img4];
-    const { selectedImage } = useImageContext();
     const [products, setProducts] = useState([]);
     const location = useLocation();
     const [showModal, setShowModal] = useState(false);
@@ -21,25 +14,38 @@ function ShoppingHome() {
     const [recommendedProducts, setRecommendedProducts] = useState([]);
     const [error, setError] = useState(null);
     const { userData, isUserDataReady } = useUserDetails();
-
     const [orderedImages, setOrderedImages] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const navigate=useNavigate();
 
     useEffect(() => {
-        if (selectedImage !== null) {
-            const reorderedImages = [
-                initialImages[selectedImage],
-                ...initialImages.filter((_, index) => index !== selectedImage),
-            ];
-            setOrderedImages(reorderedImages);
-        } else {
-            setOrderedImages(initialImages);
-        }
-    }, [selectedImage]);
+        const fetchBackgrounds = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/bgs');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch backgrounds');
+                }
+                const data = await response.json();
+                const selectedImage = data.find((img) => img.selected === true);
+                const otherImages = data.filter((img) => img.selected !== true);
+
+                setOrderedImages(selectedImage
+                    ? [selectedImage.URL, ...otherImages.map((img) => img.URL)]
+                    : data.map((img) => img.URL))
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchBackgrounds();
+    }, []);
+
 
     useEffect(() => {
         if (userData && userData.Email) {
             const email = userData.Email;
-    
+
             const fetchRecommendations = async () => {
                 try {
                     const recommendations = await getRecommendations(email);
@@ -52,7 +58,7 @@ function ShoppingHome() {
                     setError(err.message);
                 }
             };
-    
+
             fetchRecommendations();
         }
     }, [userData]);
@@ -65,8 +71,7 @@ function ShoppingHome() {
     }, []);
 
     const handleCardClick = (product) => {
-        setSelectedProduct(product);
-        setShowModal(true);    
+        navigate(`/shopping/listing/${product.No}`, { state: { product, from: "home" } });
     };
 
     const latestSliderRef = useRef(null);
@@ -108,33 +113,58 @@ function ShoppingHome() {
         <>
             <div id="carouselExample" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner">
-                    {orderedImages.map((image, index) => (
-                        <div
-                            key={index}
-                            className={`carousel-item ${index === 0 ? 'active' : ''}`}
-                        >
-                            <img src={image} className="d-block w-100" alt={`carousel-item-${index}`} />
-                            <div className="carousel-caption">
-                                <div className='head'>We picked every item with care</div>
-                                <div className='body'>You must Try</div>
-                                <Link to='/shopping/listing' className='linkToCollection'>
-                                    <button className="btn btn-dark mt-md-5 ms-1">
-                                        Go to collection<i className="fa-solid fa-arrow-right ms-3"></i>
-                                    </button>
-                                </Link>
+                    {loading ? (
+                        <div className="carousel-item active">
+                            <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
+                                <span>Loading...</span>
                             </div>
                         </div>
-                    ))}
+                    ) : error ? (
+                        <div className="carousel-item active">
+                            <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
+                                <span className="text-danger">{error}</span>
+                            </div>
+                        </div>
+                    ) : (
+                        orderedImages.map((image, index) => (
+                            <div
+                                key={index}
+                                className={`carousel-item ${index === 0 ? 'active' : ''}`}
+                            >
+                                <img src={image} className="d-block w-100" alt={`carousel-item-${index}`} />
+                                <div className="carousel-caption">
+                                    <div className="head">We picked every item with care</div>
+                                    <div className="body">You must Try</div>
+                                    <Link to="/shopping/listing" className="linkToCollection">
+                                        <button className="btn btn-dark mt-md-5 ms-1">
+                                            Go to collection<i className="fa-solid fa-arrow-right ms-3"></i>
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <button
+                    className="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carouselExample"
+                    data-bs-slide="prev"
+                >
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
                 </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <button
+                    className="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carouselExample"
+                    data-bs-slide="next"
+                >
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </button>
             </div>
+
             <div className='container my-md-4 my-3 mb-5'>
                 <div className='row'>
                     <div className='col h1 text-center'>
@@ -297,12 +327,6 @@ function ShoppingHome() {
                         <i className="fa fa-chevron-right"></i>
                     </button>
                 </div>
-                {showModal && selectedProduct && (
-                    <ProductDescription
-                        product={selectedProduct}
-                        closeModal={closeModal}
-                    />
-                )}
             </div>
         </>
     );

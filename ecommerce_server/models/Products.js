@@ -4,11 +4,15 @@ const productSchema = new mongoose.Schema({
     No:Number,
     Image: String,
     Title: String,
+    Brand: String,
     Category: String,
     Price: Number,
     SalePrice: Number,
     Stock: Number,
-    isOutOfStock: { type: Boolean, default: false }
+    Details: String,
+    Similarity: Number,
+    isOutOfStock: { type: Boolean, default: false },
+    Reviews:[]
 });
 
 productSchema.pre('save', function (next) {

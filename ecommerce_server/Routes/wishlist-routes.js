@@ -1,93 +1,73 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/Users'); // Assuming you have a User model
+const User = require('../models/Users');
 const Product = require('../models/Products');
 const mongoose = require('mongoose')
 
-// Use express.json() middleware to parse the request body as JSON
 router.use(express.json());
 
-// Get user's wishlist
-// Backend API response modification
 router.get('/wishlist/:email', async (req, res) => {
     try {
         const user = await User.findOne({ Email: req.params.email });
         if (!user) {
-            console.log("User not found:", req.params.email);  // Log if user is not found
+            console.log("User not found:", req.params.email); 
             return res.status(404).json({ message: "User not found" });
         }
 
-        console.log('Wishlist:', user.wishlist);  // Log the user's wishlist
-        res.json({ wishlist: user.wishlist || [] }); // Default empty wishlist if none exists
+        res.json({ wishlist: user.wishlist || [] });
     } catch (error) {
         console.error('Error fetching wishlist:', error);
         res.status(500).json({ message: error.message });
     }
 });
 
-
-
-// Add to wishlist
 router.post('/wishlist', async (req, res) => {
     try {
-        // Parse the incoming JSON data
         const { email, productId } = req.body;
 
-        console.log(email, productId);
-        console.log(mongoose.Types.ObjectId.isValid(productId));
-        
-        // Validate productId format (ensure it's a valid MongoDB ObjectId)
         if (!mongoose.Types.ObjectId.isValid(productId)) {
-            res.statusCode = 400;
-            return res.end(JSON.stringify({ message: 'Invalid product ID format' }));
+            return res.status(400).json({ message: 'Invalid product ID format' });
         }
 
-        // Convert the productId to ObjectId
         const objectId = new mongoose.Types.ObjectId(productId);
 
-        // Find the user by email
-        const user = await User.findOne({ Email : email });
-        console.log(user);
+        const user = await User.findOne({ Email: email });
         if (!user) {
-            res.statusCode = 404;
-            return res.end(JSON.stringify({ message: 'User not found' }));
+            return res.status(404).json({ message: 'User not found' });
         }
 
-        // Find the product by productId
         const product = await Product.findById(objectId);
         if (!product) {
-            res.statusCode = 404;
-            return res.end(JSON.stringify({ message: 'Product not found' }));
+            return res.status(404).json({ message: 'Product not found' });
         }
 
-        // Add or Remove product from the wishlist
         const productExistsInWishlist = user.wishlist.some((id) => id.equals(objectId));
 
+        let update;
         if (productExistsInWishlist) {
-            // Remove product from wishlist
-            user.wishlist = user.wishlist.filter((id) => !id.equals(objectId));
-            await user.save();
-            res.statusCode = 200;
-            return res.end(JSON.stringify({ message: 'Product removed from wishlist' }));
+            update = { $pull: { wishlist: objectId } };
         } else {
-            // Add product to wishlist
-            user.wishlist.push(objectId);
-            console.log(user.wishlist);
-            await user.save();
-            res.statusCode = 200;
-            return res.end(JSON.stringify({ message: 'Product added to wishlist' }));
+            update = { $addToSet: { wishlist: objectId } };
         }
 
+        const updatedUser = await User.findOneAndUpdate(
+            { Email: email },
+            update,
+            { new: true }
+        );
+
+        const message = productExistsInWishlist
+            ? 'Product removed from wishlist'
+            : 'Product added to wishlist';
+
+        return res.status(200).json({ message, wishlist: updatedUser.wishlist });
     } catch (error) {
         console.error('Error:', error);
-        res.statusCode = 500;
-        res.end(JSON.stringify({ message: 'Internal server error' }));
+        return res.status(500).json({ message: 'Internal server error' });
     }
 });
 
 
-
-// Remove from wishlist
 router.delete('/wishlist/:email', async (req, res) => {
     const { productId } = req.body;
     try {

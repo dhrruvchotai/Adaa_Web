@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { fetchProducts } from "../API";
-import ProductDescription from "../../../components/shopping-view/ProductDescription";
+import { useNavigate } from "react-router-dom";
 import './search-style.css';
 
 function Search() {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [showModal, setShowModal] = useState(false);
+
+    const navigate=useNavigate();
  
     useEffect(() => {
         fetchProducts().then((res) => {
@@ -18,20 +18,17 @@ function Search() {
     }, []);
 
     useEffect(() => {
-        const results = products.filter((product) =>
-            product.Title.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        const results = products.filter((product) => {
+            const combinedString = (product.Title+' '+product.Details+' '+product.Brand).toLowerCase();
+            const searchWords = searchQuery.toLowerCase().split(" ").filter(word => word.trim() !== "");
+
+            return searchWords.every(word => combinedString.includes(word));
+        });
         setFilteredProducts(results);
-    }, [searchQuery, products]);
+    }, [searchQuery, products]);    
 
     const handleCardClick = (product) => {
-        setSelectedProduct(product);
-        setShowModal(true);
-    };
-
-    const closeModal = () => {
-        setShowModal(false);
-        setSelectedProduct(null);
+        navigate(`/shopping/listing/${product.No}`, { state: { product, from: "search" } });
     };
 
     return (
@@ -61,6 +58,7 @@ function Search() {
                             />
                             <div className="product-info">
                                 <h5>{product.Title}</h5>
+                                <p className="product-brand text-secondary">{product.Brand}</p>
                                 <p className="product-price">₹{product.SalePrice}</p>
                             </div>
                         </div>
@@ -69,13 +67,6 @@ function Search() {
                     <p className="no-results">No products found</p>
                 )}
             </div>
-
-            {showModal && selectedProduct && (
-                <ProductDescription
-                    product={selectedProduct}
-                    closeModal={closeModal}
-                />
-            )}
         </div>
     );
 }

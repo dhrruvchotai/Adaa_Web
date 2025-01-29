@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 const api = 'http://localhost:3001';
 
 export const fetchProducts = async () => {
@@ -102,4 +103,31 @@ export const getUserByEmail = async (email) => {
     }
 };
 
+export const updateStockAPI = async (productNo, newStock) => {
+    try {   
+        const response = await fetch(api+'/products/'+productNo+'/update-stock', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ Stock: newStock }),
+        });
 
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to update stock");
+        }
+
+        const data = await response.json();
+        Swal.fire({
+            title: 'Success!',
+            text: data.message,
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+        return data.product;
+    } catch (error) {
+        console.error("Error updating stock:", error.message);
+        alert("An error occurred: " + error.message);
+    }
+};

@@ -32,17 +32,22 @@ router.post('/order/add', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Missing required fields.' });
         }
 
-        for (const itemNo of items) {
-            const result = await products.updateOne(
-                { No: itemNo, Stock: { $gt: 0 } },
-                { $inc: { Stock: -1 } }
-            );
-            
-            
-            if (result.matchedCount === 0) {
-                return res.status(404).json({ success: false, message: `Product with No ${itemNo} not found or out of stock.` });
+        for (const { No, Quantity } of items) {
+            if (!Quantity || Quantity <= 0) {
+                return res.status(400).json({ success: false, message: `Invalid quantity for product No ${No}.` });
             }
 
+            const result = await products.updateOne(
+                { No, Stock: { $gte: Quantity } },
+                { $inc: { Stock: -Quantity } }
+            );
+
+            if (result.matchedCount === 0) {
+                return res.status(404).json({ 
+                    success: false, 
+                    message: `Product with No ${No} not found or insufficient stock.` 
+                });
+            }
         }
 
         const newOrder = new orders({
@@ -51,7 +56,7 @@ router.post('/order/add', async (req, res) => {
             Items: items,
             PaymentMethod: paymentMethod,
             TotalAmount: totalAmount,
-            OrderDate: orderDate
+            OrderDate: orderDate,
         });
 
         await newOrder.save();
@@ -67,23 +72,38 @@ router.get('/recommendations/:email', async (req, res) => {
         const email = req.params.email;
         const purchased = await orders.find({ Email: email });
         if (!purchased || purchased.length === 0) {
-                const randomProducts = await products.aggregate([{ $sample: { size: 6 } }]);
-                return res.send(randomProducts);
+            const randomProducts = await products.aggregate([{ $sample: { size: 6 } }]);
+            return res.send(randomProducts);
         }
+        const purchasedProductNos = [
+            ...new Set(purchased.flatMap(order => order.Items.map(item => item.No)))
+        ];
 
-        const purchasedProductNos =  [...new Set(purchased.flatMap(order => order.Items))];
+        const purchasedProducts = await products.find({ No: { $in: purchasedProductNos } });
+        const similarityNos = [...new Set(purchasedProducts.map(product => product.Similarity))];
 
-        const recommendedProducts = await products.find({
-            No: { $nin: purchasedProductNos }
-        }).limit(6);
+        const similarProducts = await products.aggregate([
+            {
+                $match: {
+                    Similarity: { $in: similarityNos },
+                    No: { $nin: purchasedProductNos }
+                }
+            },
+            { $sample: { size: 6 } }
+        ]);        
+
+        let recommendedProducts = [...similarProducts];
+
         if (recommendedProducts.length < 6) {
             const additionalProducts = await products.find({
-                No: { $in: purchasedProductNos }
+                No: { $nin: [...purchasedProductNos, ...recommendedProducts.map(p => p.No)] }
             }).limit(6 - recommendedProducts.length);
+
             recommendedProducts.push(...additionalProducts);
         }
 
-        console.log(recommendedProducts);
+        recommendedProducts = recommendedProducts.slice(0, 6);
+
         res.send(recommendedProducts);
 
     } catch (err) {

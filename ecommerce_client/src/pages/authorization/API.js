@@ -117,14 +117,12 @@ export const verifyOtp = async (email, otp) => {
             headers: { 'Content-Type': 'application/json' },
         });
 
-        // Check if the response is OK (status code 200)
         if (!response.ok) {
-            const errorText = await response.text();  // Read the error text only once
+            const errorText = await response.text();
             console.error('Error response: ', errorText);
-            return { message: 'Failed to verify OTP. Please try again.' };  // Return a simple error message
+            return { message: 'Failed to verify OTP. Please try again.' };
         }
 
-        // Parse the response body as JSON once
         const data = await response.json();
         return data;
 
@@ -134,8 +132,6 @@ export const verifyOtp = async (email, otp) => {
     }
 };
 
-
-
 export const changePassword = async (email, newPassword) => {
     const response = await fetch(apiUser+'/change-password', {
         method: 'POST',
@@ -144,4 +140,3 @@ export const changePassword = async (email, newPassword) => {
     });
     return response.json();
 };
-

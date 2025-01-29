@@ -1,27 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { getProductByIdForCart } from "../API";
 import "./cart-style.css";
-import ProductDescription from '../../../components/shopping-view/ProductDescription';
-import { removeFromCartAPI, getCartByEmail } from "../API";
+import { getCartByEmail, getProductByIdForCart } from "../API";
 import useUserDetails from "../../useUserDetails"; 
 import { useNavigate } from "react-router-dom";
 
 function ShoppingCart() {
     const [cartProducts, setCartProducts] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const navigate=useNavigate();
 
     const handleCardClick = (product) => {
-        setSelectedProduct(product);
-        setShowModal(true);
-        console.log(cartProducts)
-    };
-
-    const closeModal = () => {
-        setShowModal(false);
-        setSelectedProduct(null);
+        navigate(`/shopping/listing/${product.No}`, { state: { product, from: "cart" } });
     };
 
     const { userData, isUserDataReady } = useUserDetails();
@@ -45,26 +34,6 @@ function ShoppingCart() {
         }
         fetchCartProducts();
     }, [isUserDataReady, userData?.Email]);
-
-    const removeFromCart = async (productId) => {
-        try {
-            const response = await removeFromCartAPI(userData.Email, productId);
-            if (response.error) {
-                console.error("Failed to remove product:", response.error);
-                return;
-            }
-            if (response.updatedCart) {
-                const products = await Promise.all(
-                    response.updatedCart.map((productId) => getProductByIdForCart(productId))
-                );
-                setCartProducts(products);
-            } else {
-                console.error("Failed to fetch updated cart details.");
-            }
-        } catch (error) {
-            console.error("Error removing product from cart:", error);
-        }
-    };
 
     return (
         <div className="shopping-cart-page">
@@ -96,13 +65,6 @@ function ShoppingCart() {
                     <button className="proceed-to-buy-btn" onClick={() => navigate('/shopping/checkout')}>
                         Proceed to Buy
                     </button>
-                )}
-                {showModal && selectedProduct && (
-                    <ProductDescription
-                        product={selectedProduct}
-                        closeModal={closeModal}
-                        removeFromCart={removeFromCart}
-                    />
                 )}
             </div>
         </div>

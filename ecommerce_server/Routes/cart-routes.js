@@ -37,37 +37,13 @@ router.put("/cart/remove", async (req, res) => {
     }
 });
 
-// router.get('/cart/:email', async (req, res) => {
-//     try {
-//         const email = req.params.email.trim().toLowerCase();
-//         console.log("The Email is : ",email)
-//         const user = await cart.findOne({ Email : email });
-//         console.log("The User is : ",user);
-    
-//         if (!user) {
-//             return res.status(404).json({ message: "User not found" });
-//         }
-        
-//         res.status(200).json(user);
-//     } catch (error) {
-//         console.error('Error fetching user by email:', error);
-//         res.status(500).json({ message: 'Server error' });
-//     }
-// });
-
 router.get('/cart/:email', async (req, res) => {
     try {
         const email = req.params.email.trim().toLowerCase();
-        console.log("Searching for email:", email);
-
         const user = await cart.findOne({ Email: email });
-        console.log("Query result:", user);
-
         if (!user) {
-            console.log("User not found in database.");
             return res.status(404).json({ message: "User not found" });
         }
-
         res.status(200).json(user);
     } catch (error) {
         console.error('Error fetching user by email:', error);
@@ -80,7 +56,6 @@ router.put("/cart/add", async (req, res) => {
     try {
         const user = await cart.findOne({ Email: userEmail });
         if (!user) {
-            console.log("User not found");
             return res.status(404).json({ message: "User not found" });
         }
         if (user.Cart.includes(productId)) {
@@ -121,6 +96,5 @@ router.put('/cart/empty', async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 });
-
 
 module.exports = router;
