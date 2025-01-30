@@ -32,7 +32,7 @@ const Chatbot = ({ setIsChatbotOpen }) => {
 
     if (isUserDataReady) {
       try {
-        const response = await fetch('http://localhost:3001/chat/message', {
+        const response = await fetch('https://adaa-web-backend.onrender.com/chat/message', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

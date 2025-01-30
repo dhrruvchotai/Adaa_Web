@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-const apiUser = 'http://localhost:3001';
+const apiUser = 'https://adaa-web-backend.onrender.com';
 
 export const checkUserByEmail = async (email) => {
     try {
