@@ -57,13 +57,13 @@ function Login() {
                 setUserGlobal(response.user);
                 console.log("User set in global state");
 
-                await Swal.fire({
-                    icon: "success",
-                    title: "Login Successful",
-                    text: "You have logged in successfully",
-                });
+                // await Swal.fire({
+                //     icon: "success",
+                //     title: "Login Successful",
+                //     text: "You have logged in successfully",
+                // });
 
-                console.log("Swal alert closed");
+                // console.log("Swal alert closed");
 
                 // Navigate after the Swal alert is closed
                 if (response.role === 'admin') {
@@ -73,11 +73,11 @@ function Login() {
                 }
                 console.log("Navigation complete");
             } else {
-                await Swal.fire({
-                    icon: "error",
-                    title: "Login Failed",
-                    text: response.message,
-                });
+                // await Swal.fire({
+                //     icon: "error",
+                //     title: "Login Failed",
+                //     text: response.message,
+                // });
                 console.log("Login failed alert shown");
             }
         } catch (error) {
