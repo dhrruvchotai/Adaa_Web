@@ -123,7 +123,6 @@ input:focus {
     border-color: black;
 }
 
-/* Buttons */
 .mybtn {
     margin-bottom: 15px;
     background-color: black;
@@ -136,12 +135,10 @@ input:focus {
     transition: all 0.3s ease;
 }
 
-/* .btn-primary {
-    background: white;
-    color: black;
-} */
-
-
+.btn-primary {
+    background: black;
+    color: white;
+}
 
 .mybtn:hover {
     background: rgb(68, 64, 64);
