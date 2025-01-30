@@ -47,39 +47,50 @@ function Login() {
         }
 
         setLoading(true); // Set loading state
+        console.log("Loading state set to true");
 
         try {
             const response = await checkUser(user);
+            console.log("API response:", response);
+
             if (response.success) {
                 setUserGlobal(response.user);
-                Swal.fire({
+                console.log("User set in global state");
+
+                await Swal.fire({
                     icon: "success",
                     title: "Login Successful",
                     text: "You have logged in successfully",
-                }).then(() => {
-                    // Navigate after the Swal alert is closed
-                    if (response.role === 'admin') {
-                        navigate('/admin');
-                    } else {
-                        navigate('/shopping');
-                    }
                 });
+
+                console.log("Swal alert closed");
+
+                // Navigate after the Swal alert is closed
+                if (response.role === 'admin') {
+                    navigate('/admin');
+                } else {
+                    navigate('/shopping');
+                }
+                console.log("Navigation complete");
             } else {
-                Swal.fire({
+                await Swal.fire({
                     icon: "error",
                     title: "Login Failed",
                     text: response.message,
                 });
+                console.log("Login failed alert shown");
             }
         } catch (error) {
-            Swal.fire({
+            console.error("Login error:", error);
+            await Swal.fire({
                 icon: "error",
                 title: "Error",
                 text: "Something went wrong. Please try again later.",
             });
-            console.error("Login error:", error);
+            console.log("Error alert shown");
         } finally {
             setLoading(false); // Reset loading state
+            console.log("Loading state set to false");
         }
     };
 
