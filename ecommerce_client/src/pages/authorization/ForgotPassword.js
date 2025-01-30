@@ -4,7 +4,8 @@ import { sendOtpToEmail, verifyOtp, changePassword } from './API';
 import { useNavigate } from 'react-router-dom';
 import { KeyRound, Mail, Lock } from 'lucide-react';
 import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
+import './style.css';
+
 
 function ForgotPassword() {
     const [email, setEmail] = useState('');
