@@ -95,12 +95,12 @@ function Login() {
         <>
             <div className="container px-lg-4">
                 <div className="row text-center">
-                    <div className="col h1">
+                    <div className="col h1 signInText">
                         Sign in to your account
                     </div>
                 </div>
                 <div className="row text-center py-1">
-                    <div className="col">
+                    <div className="col toRegister">
                         Don't have an account? <Link to='/auth/register' className='text-decoration-none'>Register</Link>
                     </div>
                 </div>
@@ -146,16 +146,16 @@ function Login() {
                 <div className='row px-5 py-5'>
                     <div className='col'>
                         <button 
-                            className='btn btn-lg w-100' 
-                            style={{ backgroundColor: "#150647", color: "white" }}
+                            className='btn btn-lg w-100 mybtn'  
+                            style={{color: "white" }}
                             onClick={handleFormSubmit}
                             disabled={loading}
                         >
                             {loading ? 'Signing In...' : 'Sign In'}
                         </button>
                         <button 
-                            className='btn btn-lg w-100 mt-2' 
-                            style={{ backgroundColor: "#150647", color: "white" }}
+                            className='btn btn-lg w-100 mt-2 mybtn' 
+                            style={{color: "white" }}
                             onClick={handleForgotPassword}
                             disabled={loading}
                         >

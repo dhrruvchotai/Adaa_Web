@@ -135,12 +135,12 @@ function Register() {
         <>
             <div className="container px-4">
                 <div className="row text-center">
-                    <div className="col h1">
+                    <div className="col h1 signInText ">
                         Create New Account
                     </div>
                 </div>
                 <div className="row text-center py-1">
-                    <div className="col">
+                    <div className="col toRegister">
                         Already have an account? <Link to='/auth/login' className='text-decoration-none'>Login</Link>
                     </div>
                 </div>
@@ -228,8 +228,8 @@ function Register() {
                 <div className='row px-5 py-5'>
                     <div className='col'>
                         <button
-                            className='btn btn-lg w-100'
-                            style={{ backgroundColor: "#150647", color: "white" }}
+                            className='btn btn-lg w-100 mybtn'
+                            style={{ color: "white" }}
                             onClick={handleFormSubmit}
                         >Sign Up</button>
                     </div>
