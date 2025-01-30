@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import Swal from 'sweetalert2';
+import { toast, ToastContainer } from 'react-toastify';
 import { sendOtpToEmail, verifyOtp, changePassword } from './API';
 import { useNavigate } from 'react-router-dom';
-import './App.css';
 import { KeyRound, Mail, Lock } from 'lucide-react';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 
 function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -16,10 +17,13 @@ function ForgotPassword() {
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         if (!/\S+@\S+\.\S+/.test(email)) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Invalid Email Format',
-                text: 'Please enter a valid email address.',
+            toast.error('Please enter a valid email address.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
             });
             return;
         }
@@ -28,24 +32,21 @@ function ForgotPassword() {
         try {
             const response = await sendOtpToEmail(email);
             if (response.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'OTP Sent',
-                    text: 'An OTP has been sent to your email.',
+                toast.success('OTP has been sent to your email.', {
+                    position: "top-right",
+                    autoClose: 3000
                 });
                 setStep(2);
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Send OTP',
-                    text: response.message,
+                toast.error(response.message || 'Failed to send OTP', {
+                    position: "top-right",
+                    autoClose: 3000
                 });
             }
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Something went wrong. Please try again later.',
+            toast.error('Something went wrong. Please try again later.', {
+                position: "top-right",
+                autoClose: 3000
             });
         } finally {
             setLoading(false);
@@ -59,24 +60,21 @@ function ForgotPassword() {
         try {
             const response = await verifyOtp(email, otp);
             if (response.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'OTP Verified',
-                    text: 'OTP has been verified. You can now reset your password.',
+                toast.success('OTP verified successfully. You can now reset your password.', {
+                    position: "top-right",
+                    autoClose: 3000
                 });
                 setStep(3);
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Invalid OTP',
-                    text: response.message,
+                toast.error(response.message || 'Invalid OTP', {
+                    position: "top-right",
+                    autoClose: 3000
                 });
             }
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Something went wrong. Please try again later.',
+            toast.error('Something went wrong. Please try again later.', {
+                position: "top-right",
+                autoClose: 3000
             });
         } finally {
             setLoading(false);
@@ -86,10 +84,9 @@ function ForgotPassword() {
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         if (newPassword.length < 6) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Weak Password',
-                text: 'Password must be at least 6 characters long.',
+            toast.error('Password must be at least 6 characters long.', {
+                position: "top-right",
+                autoClose: 3000
             });
             return;
         }
@@ -98,24 +95,23 @@ function ForgotPassword() {
         try {
             const response = await changePassword(email, newPassword);
             if (response.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Password Changed',
-                    text: 'Your password has been successfully changed.',
+                toast.success('Password changed successfully!', {
+                    position: "top-right",
+                    autoClose: 3000
                 });
-                navigate('/auth/login');
+                setTimeout(() => {
+                    navigate('/auth/login');
+                }, 2000);
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Change Password',
-                    text: response.message,
+                toast.error(response.message || 'Failed to change password', {
+                    position: "top-right",
+                    autoClose: 3000
                 });
             }
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Something went wrong. Please try again later.',
+            toast.error('Something went wrong. Please try again later.', {
+                position: "top-right",
+                autoClose: 3000
             });
         } finally {
             setLoading(false);
@@ -124,6 +120,7 @@ function ForgotPassword() {
 
     return (
         <div className="forgot-password-container">
+            <ToastContainer />
             <div className="forgot-password-card">
                 <div className="step-indicator">
                     <div className={`step ${step >= 1 ? 'active' : ''}`} />
