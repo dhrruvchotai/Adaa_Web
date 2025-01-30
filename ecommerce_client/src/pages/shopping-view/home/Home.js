@@ -21,7 +21,7 @@ function ShoppingHome() {
     useEffect(() => {
         const fetchBackgrounds = async () => {
             try {
-                const response = await fetch('http://localhost:3001/bgs');
+                const response = await fetch('https://adaa-web-backend.onrender.com/bgs');
                 if (!response.ok) {
                     throw new Error('Failed to fetch backgrounds');
                 }
