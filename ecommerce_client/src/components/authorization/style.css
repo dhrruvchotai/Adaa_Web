@@ -136,10 +136,10 @@ input:focus {
     transition: all 0.3s ease;
 }
 
-.btn-primary {
+/* .btn-primary {
     background: white;
     color: black;
-}
+} */
 
 
 
@@ -171,4 +171,21 @@ input:focus {
 
 .toRegister{
     z-index: 2;
+}
+
+.spinner-border {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: text-bottom;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
+    }
 }

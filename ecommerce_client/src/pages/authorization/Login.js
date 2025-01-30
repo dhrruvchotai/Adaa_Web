@@ -56,12 +56,14 @@ function Login() {
                     icon: "success",
                     title: "Login Successful",
                     text: "You have logged in successfully",
+                }).then(() => {
+                    // Navigate after the Swal alert is closed
+                    if (response.role === 'admin') {
+                        navigate('/admin');
+                    } else {
+                        navigate('/shopping');
+                    }
                 });
-                if (response.role === 'admin') {
-                    navigate('/admin');
-                } else {
-                    navigate('/shopping');
-                }
             } else {
                 Swal.fire({
                     icon: "error",
@@ -88,8 +90,8 @@ function Login() {
     };
 
     const handleForgotPassword = async (e) => {
-        navigate('/auth/forgot-password')
-    }
+        navigate('/auth/forgot-password');
+    };
 
     return (
         <>
@@ -147,15 +149,22 @@ function Login() {
                     <div className='col'>
                         <button 
                             className='btn btn-lg w-100 mybtn'  
-                            style={{color: "white" }}
+                            style={{ color: "white" }}
                             onClick={handleFormSubmit}
                             disabled={loading}
                         >
-                            {loading ? 'Signing In...' : 'Sign In'}
+                            {loading ? (
+                                <>
+                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span className="ms-2">Signing In...</span>
+                                </>
+                            ) : (
+                                'Sign In'
+                            )}
                         </button>
                         <button 
                             className='btn btn-lg w-100 mt-2 mybtn' 
-                            style={{color: "white" }}
+                            style={{ color: "white" }}
                             onClick={handleForgotPassword}
                             disabled={loading}
                         >
