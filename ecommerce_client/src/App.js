@@ -21,6 +21,8 @@ import ShoppingCheckout from "./pages/shopping-view/checkout/Checkout";
 import ForgotPassword from './pages/authorization/ForgotPassword'
 import WishlistPage from './pages/shopping-view/wishlist/Wishlist'
 import Home from "./pages/Home";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     
@@ -28,6 +30,7 @@ function App() {
 
     return (
             <BrowserRouter>
+                <ToastContainer />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route
