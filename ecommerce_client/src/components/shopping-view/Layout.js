@@ -55,12 +55,15 @@ function ShoppingLayout() {
                     left: 0,
                     width: "100%",
                     zIndex: 1000,
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",  // Light transparent background
+                    opacity : 0.9,
                     boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+                    transition: "all 0.3s ease-in-out",
                 }}
             >
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/shopping">
-                        <i className="fa-solid fa-charging-station me-3"></i>ECommerce
+                        <img src="/Adaa_Logo.png" alt="Adaa" style={{ height: "50px" }} />
                     </Link>
                     <button
                         className="navbar-toggler"
