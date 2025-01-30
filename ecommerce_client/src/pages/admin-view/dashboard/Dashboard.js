@@ -11,7 +11,7 @@ function AdminDashboard() {
     useEffect(() => {
         const fetchBackgrounds = async () => {
             try {
-                const response = await fetch('http://localhost:3001/bgs');
+                const response = await fetch('https://adaa-web-backend.onrender.com/bgs');
                 if (!response.ok) {
                     throw new Error('Failed to fetch backgrounds');
                 }
@@ -35,7 +35,7 @@ function AdminDashboard() {
         }
     
         try {
-            const response = await fetch('http://localhost:3001/bgs/add', {
+            const response = await fetch('https://adaa-web-backend.onrender.com/bgs/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ function AdminDashboard() {
         const selectedImage = images[index];
 
         try {
-            const response = await fetch('http://localhost:3001/bgs/select', {
+            const response = await fetch('https://adaa-web-backend.onrender.com/bgs/select', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
