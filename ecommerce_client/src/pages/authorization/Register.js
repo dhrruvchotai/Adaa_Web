@@ -153,7 +153,7 @@ function Register() {
                     <div className='col text-center'>
                         <input
                             type='text'
-                            className='w-100 py-1 px-2'
+                            className='w-100 py-1 px-2 myinput'
                             placeholder='Enter your username'
                             onChange={(e) => setUser(prev => ({ ...prev, Username: e.target.value }))}
                             onKeyDown={handleKeyDown}
@@ -169,7 +169,7 @@ function Register() {
                     <div className='col text-center'>
                         <input
                             type='email'
-                            className='w-100 py-1 px-2'
+                            className='w-100 py-1 px-2 myinput'
                             placeholder='Enter your email'
                             onChange={handleEmailChange}
                             onKeyDown={handleKeyDown}
@@ -190,7 +190,7 @@ function Register() {
                     <div className='col text-center'>
                         <input
                             type='password'
-                            className='w-100 py-1 px-2'
+                            className='w-100 py-1 px-2 myinput'
                             placeholder='Enter your password'
                             onChange={handlePasswordChange}
                             onKeyDown={handleKeyDown}
@@ -211,7 +211,7 @@ function Register() {
                     <div className='col text-center'>
                         <input
                             type='text'
-                            className='w-100 py-1 px-2'
+                            className='w-100 py-1 px-2 myinput'
                             placeholder='Enter your phone number'
                             onChange={handlePhoneChange}
                             onKeyDown={handleKeyDown}

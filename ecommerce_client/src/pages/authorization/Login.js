@@ -103,7 +103,7 @@ function Login() {
                         <input 
                             id="emailInput"
                             type='email' 
-                            className='w-100 py-1 px-2' 
+                            className='w-100 py-1 px-2 myinput' 
                             placeholder='Enter your email'
                             onChange={(e) => setUser(prev => ({ ...prev, Email: e.target.value }))}
                             onKeyDown={handleKeyDown}
@@ -122,7 +122,7 @@ function Login() {
                     <div className='col text-center'>
                         <input 
                             type='password' 
-                            className='w-100 py-1 px-2' 
+                            className='w-100 py-1 px-2 myinput' 
                             placeholder='Enter your password'
                             onChange={(e) => setUser(prev => ({ ...prev, Password: e.target.value }))}
                             onKeyDown={handleKeyDown}

@@ -135,7 +135,7 @@ function ForgotPassword() {
                         <form onSubmit={handleEmailSubmit}>
                             <div className="input-group">
                                 <label htmlFor="email" className="input-label">
-                                    <Mail className="inline-block w-5 h-5 mr-2" />
+                                    <Mail className="inline-block w-5 h-5 m-2" />
                                     Email Address
                                 </label>
                                 <input
@@ -149,7 +149,7 @@ function ForgotPassword() {
                             </div>
                             <button
                                 type="submit"
-                                className="submit-button"
+                                className="submit-button mybtn"
                                 disabled={loading}
                             >
                                 {loading ? (

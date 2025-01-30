@@ -104,7 +104,8 @@ input, button {
 }
 
 /* Input Fields */
-input {
+.myinput{
+    height: 6vh;
     width: 100%;
     padding: 12px;
     border-radius: 8px;
@@ -115,18 +116,19 @@ input {
     transition: all 0.3s ease;
 }
 
-input::placeholder {
+.myinput::placeholder {
     color: #aaa;
 }
 
-input:focus {
+.myinput:focus {
     border-color: black;
 }
 
 .mybtn {
-    margin-bottom: 15px;
+    margin-bottom: 8px;
     background-color: black;
     width: 100%;
+    color: white;
     padding: 12px;
     border-radius: 30px;
     border: none;
@@ -189,20 +191,24 @@ input:focus {
 
 
 .forgot-password-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f5f5f5;
-  padding: 1rem;
-  font-family: 'Poppins', sans-serif;
+    backdrop-filter:blur(200px);
+    min-height: 104vh;
+    margin-top: -10px !important;
+    min-width: 100vw;
+    width: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(35deg, #000000, #424040) !important;
 }
 
 .forgot-password-card {
-  background: white;
+  border: none;
+  border-radius: 10%;
+  background:white;
   padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 10px 30px rgba(62, 60, 60, 0.1); */
   width: 100%;
   max-width: 450px;
   animation: slideUp 0.5s ease-out;
@@ -263,7 +269,7 @@ input:focus {
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
-.submit-button {
+/* .submit-button {
   width: 100%;
   padding: 0.75rem;
   background: #000;
@@ -274,9 +280,9 @@ input:focus {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-}
+} */
 
-.submit-button:hover {
+/* .submit-button:hover {
   background: #333;
   transform: translateY(-2px);
 }
@@ -285,7 +291,7 @@ input:focus {
   background: #666;
   cursor: not-allowed;
   transform: none;
-}
+} */
 
 .loading-spinner {
   display: inline-block;

@@ -214,7 +214,7 @@ export const getRecommendations = async (email) => {
 
 export const addToWishlistAPI = async (email, productId) => {
     try {
-        const response = await fetch('http://localhost:3001/wishlist', {
+        const response = await fetch('https://adaa-web-backend.onrender.com/wishlist', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
