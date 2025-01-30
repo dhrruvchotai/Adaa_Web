@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-const api = 'http://localhost:3001';
+const api = 'https://adaa-web-backend.onrender.com';
 
 export const fetchProducts = async () => {
     try {
