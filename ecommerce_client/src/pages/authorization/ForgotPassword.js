@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import Swal from 'sweetalert2';
+import { Link, useNavigate } from 'react-router-dom';
 import { sendOtpToEmail, verifyOtp, changePassword } from './API';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './style.css';
 
 function ForgotPassword() {
@@ -15,11 +16,7 @@ function ForgotPassword() {
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         if (!/\S+@\S+\.\S+/.test(email)) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Invalid Email Format',
-                text: 'Please enter a valid email address.',
-            });
+            toast.error('Please enter a valid email address.');
             return;
         }
 
@@ -27,188 +24,203 @@ function ForgotPassword() {
         try {
             const response = await sendOtpToEmail(email);
             if (response.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'OTP Sent',
-                    text: 'An OTP has been sent to your email.',
-                });
+                toast.success('An OTP has been sent to your email.');
                 setStep(2); // Move to OTP verification step
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Send OTP',
-                    text: response.message,
-                });
+                toast.error(response.message || 'Failed to send OTP.');
             }
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Something went wrong. Please try again later.',
-            });
+            toast.error('Something went wrong. Please try again later.');
         } finally {
             setLoading(false);
         }
     };
 
-    // Verify the OTP entered by the user
     const handleOtpSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-    
+
         try {
             const response = await verifyOtp(email, otp);
-    
             if (response.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'OTP Verified',
-                    text: 'OTP has been verified. You can now reset your password.',
-                });
+                toast.success('OTP has been verified. You can now reset your password.');
                 setStep(3); // Move to password reset step
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Invalid OTP',
-                    text: response.message,
-                });
+                toast.error(response.message || 'Invalid OTP.');
             }
-    
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Something went wrong. Please try again later.',
-            });
+            toast.error('Something went wrong. Please try again later.');
         } finally {
             setLoading(false);
         }
-    };    
+    };
 
-    // Change password after OTP verification
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         if (newPassword.length < 6) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Weak Password',
-                text: 'Password must be at least 6 characters long.',
-            });
+            toast.error('Password must be at least 6 characters long.');
             return;
         }
-    
+
         setLoading(true);
         try {
             const response = await changePassword(email, newPassword);
             if (response.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Password Changed',
-                    text: 'Your password has been successfully changed.',
-                });
+                toast.success('Your password has been successfully changed.');
                 navigate('/auth/login');
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Change Password',
-                    text: response.message,
-                });
+                toast.error(response.message || 'Failed to change password.');
             }
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Something went wrong. Please try again later.',
-            });
+            toast.error('Something went wrong. Please try again later.');
         } finally {
             setLoading(false);
         }
-    };    
+    };
 
     return (
-        <div className="container forgot-password-container px-lg-4">
-            {step === 1 && (
-                <div>
-                    <h1 className="text-center">Forgot Password</h1>
-                    <form onSubmit={handleEmailSubmit}>
-                        <div className="mb-3">
-                            <label htmlFor="email" className="form-label">
-                                Enter your email
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                className="form-control"
-                                placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <button
-                            type="submit"
-                            className="btn btn-primary w-100"
-                            disabled={loading}
-                        >
-                            {loading ? 'Sending OTP...' : 'Send OTP'}
-                        </button>
-                    </form>
+        <>
+            <div className="container px-lg-4">
+                <div className="row text-center">
+                    <div className="col h1 signInText">
+                        {step === 1 && 'Forgot Password'}
+                        {step === 2 && 'Enter OTP'}
+                        {step === 3 && 'Change Password'}
+                    </div>
                 </div>
-            )}
+                <div className="row text-center py-1">
+                    <div className="col toRegister">
+                        Remember your password? <Link to='/auth/login' className='text-decoration-none'>Login</Link>
+                    </div>
+                </div>
 
-            {step === 2 && (
-                <div>
-                    <h1 className="text-center">Enter OTP</h1>
-                    <form onSubmit={handleOtpSubmit}>
-                        <div className="mb-3">
-                            <label htmlFor="otp" className="form-label">
-                                Enter the OTP sent to your email
-                            </label>
-                            <input
-                                type="text"
-                                id="otp"
-                                className="form-control"
-                                value={otp}
-                                onChange={(e) => setOtp(e.target.value)}
-                            />
+                {step === 1 && (
+                    <div className="row pt-4 px-lg-5 pb-1 px-1">
+                        <div className="col">
+                            <div className="row">
+                                <div className="col fw-bold fs-5">Email</div>
+                            </div>
+                            <div className="row px-lg-5 px-1">
+                                <div className="col text-center">
+                                    <input
+                                        type="email"
+                                        className="w-100 py-1 px-2"
+                                        placeholder="Enter your email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                    {email && !/\S+@\S+\.\S+/.test(email) && (
+                                        <small className="text-danger">Please enter a valid email address</small>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="row px-5 py-5">
+                                <div className="col">
+                                    <button
+                                        className="btn btn-lg w-100 mybtn"
+                                        style={{ color: "white" }}
+                                        onClick={handleEmailSubmit}
+                                        disabled={loading}
+                                    >
+                                        {loading ? (
+                                            <>
+                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                <span className="ms-2">Sending OTP...</span>
+                                            </>
+                                        ) : (
+                                            'Send OTP'
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <button
-                            type="submit"
-                            className="btn btn-primary w-100"
-                            disabled={loading}
-                        >
-                            {loading ? 'Verifying OTP...' : 'Verify OTP'}
-                        </button>
-                    </form>
-                </div>
-            )}
+                    </div>
+                )}
 
-            {step === 3 && (
-                <div>
-                    <h1 className="text-center">Change Password</h1>
-                    <form onSubmit={handlePasswordSubmit}>
-                        <div className="mb-3">
-                            <label htmlFor="newPassword" className="form-label">
-                                Enter new password
-                            </label>
-                            <input
-                                type="password"
-                                id="newPassword"
-                                className="form-control"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                            />
+                {step === 2 && (
+                    <div className="row pt-4 px-lg-5 pb-1 px-1">
+                        <div className="col">
+                            <div className="row">
+                                <div className="col fw-bold fs-5">OTP</div>
+                            </div>
+                            <div className="row px-lg-5 px-1">
+                                <div className="col text-center">
+                                    <input
+                                        type="text"
+                                        className="w-100 py-1 px-2"
+                                        placeholder="Enter the OTP sent to your email"
+                                        value={otp}
+                                        onChange={(e) => setOtp(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <div className="row px-5 py-5">
+                                <div className="col">
+                                    <button
+                                        className="btn btn-lg w-100 mybtn"
+                                        style={{ color: "white" }}
+                                        onClick={handleOtpSubmit}
+                                        disabled={loading}
+                                    >
+                                        {loading ? (
+                                            <>
+                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                <span className="ms-2">Verifying OTP...</span>
+                                            </>
+                                        ) : (
+                                            'Verify OTP'
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <button
-                            type="submit"
-                            className="btn btn-primary w-100"
-                            disabled={loading}
-                        >
-                            {loading ? 'Changing Password...' : 'Change Password'}
-                        </button>
-                    </form>
-                </div>
-            )}
-        </div>
+                    </div>
+                )}
+
+                {step === 3 && (
+                    <div className="row pt-4 px-lg-5 pb-1 px-1">
+                        <div className="col">
+                            <div className="row">
+                                <div className="col fw-bold fs-5">New Password</div>
+                            </div>
+                            <div className="row px-lg-5 px-1">
+                                <div className="col text-center">
+                                    <input
+                                        type="password"
+                                        className="w-100 py-1 px-2"
+                                        placeholder="Enter new password"
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                    />
+                                    {newPassword.length > 0 && newPassword.length < 6 && (
+                                        <small className="text-danger">Password must be at least 6 characters long</small>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="row px-5 py-5">
+                                <div className="col">
+                                    <button
+                                        className="btn btn-lg w-100 mybtn"
+                                        style={{ color: "white" }}
+                                        onClick={handlePasswordSubmit}
+                                        disabled={loading}
+                                    >
+                                        {loading ? (
+                                            <>
+                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                <span className="ms-2">Changing Password...</span>
+                                            </>
+                                        ) : (
+                                            'Change Password'
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </>
     );
 }
 
