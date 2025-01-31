@@ -73,7 +73,7 @@ function ShoppingCheckout() {
 
     const applyCoupon = async () => {
         try {
-            const response = await fetch("http://localhost:3001/verify-coupon", {
+            const response = await fetch("https://adaa-web-backend.onrender.com/verify-coupon", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -258,7 +258,7 @@ function ShoppingCheckout() {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        const response = await fetch("http://localhost:3001/create-payment-intent", {
+                        const response = await fetch("https://adaa-web-backend.onrender.com/create-payment-intent", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
