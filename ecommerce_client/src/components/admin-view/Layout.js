@@ -24,7 +24,7 @@ function AdminLayout() {
     }
     useEffect(() => {
         const handleBackButton = (event) => {
-            navigate('/', { replace: true });
+            navigate('/auth/login', { replace: true });
         };
         window.addEventListener('popstate', handleBackButton);
         return () => {
