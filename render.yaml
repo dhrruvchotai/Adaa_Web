@@ -6,5 +6,5 @@ services:
     staticPublishPath: ./build
     rewrite:
       - from: /*
-        to: /index.html
+        to: /
         status: 200
