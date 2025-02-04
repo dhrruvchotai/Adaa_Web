@@ -185,7 +185,7 @@ function ForgotPassword() {
                             </div>
                             <button
                                 type="submit"
-                                className="submit-button"
+                                className="submit-button mybtn"
                                 disabled={loading}
                             >
                                 {loading ? (
@@ -221,7 +221,7 @@ function ForgotPassword() {
                             </div>
                             <button
                                 type="submit"
-                                className="submit-button"
+                                className="submit-button mybtn"
                                 disabled={loading}
                             >
                                 {loading ? (

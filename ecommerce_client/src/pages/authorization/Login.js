@@ -4,7 +4,7 @@ import { checkUser } from './API';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from './UserContext';
-import './style.css';
+import '../../components/authorization/style.css';
 
 function Login() {
     const [user, setUser] = useState({
@@ -135,14 +135,14 @@ function Login() {
                 <div className='row px-5 py-5'>
                     <div className='col'>
                         <button 
-                            className='btn btn-lg w-100 mybtn'  
+                            className='btn-lg w-100 mybtn fw-mediumf fs-5'  
                             style={{ color: "white" }}
                             onClick={handleFormSubmit}
                             disabled={loading}
                         >
                             {loading ? (
                                 <>
-                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span className="spinner-border spinner-border-sm" role="status"></span>
                                     <span className="ms-2">Signing In...</span>
                                 </>
                             ) : (
@@ -150,7 +150,7 @@ function Login() {
                             )}
                         </button>
                         <button 
-                            className='btn btn-lg w-100 mt-2 mybtn' 
+                            className='btn-lg w-100 mt-2 mybtn fw-medium fs-5' 
                             style={{ color: "white" }}
                             onClick={handleForgotPassword}
                             disabled={loading}

@@ -111,9 +111,11 @@ function Home() {
             <div className="home-heading" style={{ fontSize: "40px", marginBottom: "20px" }}>
                 <SplitText text="Get into the World of Shopping" />
             </div>
+            {/* Remove SplitText for "Best Online Store" */}
             <div className="home-subheading" style={{ fontSize: "70px", marginBottom: "40px" }}>
-                <SplitText text="Best Online Store" />
+                Best Online Store
             </div>
+            {/* Button without animation */}
             <button
                 className="home-button"
                 onClick={() => navigate('./auth/login')}
