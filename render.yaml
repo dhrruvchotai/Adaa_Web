@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: Adaa_Web-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./build
+    rewrite:
+      - from: /*
+        to: /index.html
+        status: 200
