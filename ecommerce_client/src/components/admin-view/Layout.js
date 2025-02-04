@@ -18,6 +18,7 @@ function AdminLayout() {
                 localStorage.removeItem('authToken');
                 sessionStorage.removeItem('authToken');
                 window.location.href = "https://adaa-web-frontend.onrender.com/auth/login";
+                window.location.reload();
             }
           });
     }
