@@ -13,24 +13,25 @@ function AdminLayout() {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes"
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 localStorage.removeItem('authToken');
                 sessionStorage.removeItem('authToken');
-                window.location.replace("https://adaa-web-frontend.onrender.com/auth/login");
-                window.location.reload();
+                // Complete browser redirect
+                window.location.href = "https://adaa-web-frontend.onrender.com/auth/login";
             }
-          });
+        });
     }
+    
     useEffect(() => {
-        const handleBackButton = (event) => {
-            navigate('https://adaa-web-frontend.onrender.com/auth/login', { replace: true });
+        const handleBackButton = () => {
+            window.location.href = "https://adaa-web-frontend.onrender.com/auth/login";
         };
         window.addEventListener('popstate', handleBackButton);
         return () => {
             window.removeEventListener('popstate', handleBackButton);
         };
-    }, [navigate]);
+    }, []);
  
     return (
         <div className="container-fluid">
