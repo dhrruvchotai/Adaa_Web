@@ -18,13 +18,13 @@ function AdminLayout() {
                 localStorage.removeItem('authToken');
                 sessionStorage.removeItem('authToken');
                 window.location.replace("https://adaa-web-frontend.onrender.com/auth/login");
-    
+                window.location.reload();
             }
           });
     }
     useEffect(() => {
         const handleBackButton = (event) => {
-            navigate('/', { replace: true });
+            navigate('https://adaa-web-frontend.onrender.com/auth/login', { replace: true });
         };
         window.addEventListener('popstate', handleBackButton);
         return () => {
