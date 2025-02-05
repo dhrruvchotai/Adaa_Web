@@ -219,7 +219,7 @@ function ShoppingHome() {
             {/* Replace the Men and Women cards with the SplitCardsUI component */}
             <div className='container my-md-4 my-3 mb-5'>
                 <div className='row'>
-                    <div className='col h1 text-center'>
+                    <div className='col h1 text-center text-white-important'>
                         Shop by category
                     </div>
                 </div>

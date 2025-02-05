@@ -217,47 +217,44 @@ border: 1px solid #ccc;
 cursor: pointer;
 }
 
+/* Styles for the container of the div that will act like a popup */
 .order-description-popup-container {
-  display: none;
+  display: none; /* Initially hidden */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  background: rgba(0, 0, 0, 0.5); /* Dark background */
+  z-index: 999; /* Ensure it's on top */
   justify-content: center;
   align-items: center;
   padding: 20px;
 }
 
+/* When the div is visible, display it as flex */
 .order-description-popup-container.visible {
   display: flex;
 }
 
 .order-description-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 25px;
   background: #ffffff;
-  width: 52vw;
-  max-height: 90vh;
+  width: 52%;
+  max-height: 100vh;
   overflow-y: auto;
   background-color: #f4f8f7;
   border: 3px solid #37ab96;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
-  z-index: 1000;
 }
 
-
+/* Close button styling */
 .popup-close-btn {
   align-self: flex-end;
   font-size: 1.5rem;
@@ -269,12 +266,13 @@ cursor: pointer;
 }
 
 .popup-close-btn:hover {
-  color: #2f8e7a;
+  color: #2f8e7a; /* Slightly darker color on hover */
 }
 
+/* Responsive styling for smaller screens */
 @media (max-width: 768px) {
   .order-description-popup {
-    width: 90%;
+    width: 90%; /* Full width on smaller screens */
     padding: 15px;
   }
 }
@@ -317,11 +315,11 @@ cursor: pointer;
   color: #333;
 }
 
+/* Table styling for products */
 .products-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  color: #333;
 }
 
 .products-table th,

@@ -278,21 +278,3 @@ export const getReviewsAPI = async (productNo) => {
     }
     return response.json();
 };
-
-export const increaseViewCountAPI = async (productId) => {
-    try {
-      const response = await fetch(`${api}/products/increase-viewcount/${productId}`, {
-        method: "PUT",
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
-      }
-  
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Failed to increase view count:", error);
-      throw error;
-    }
-  };

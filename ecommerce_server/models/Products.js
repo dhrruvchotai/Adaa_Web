@@ -11,8 +11,6 @@ const productSchema = new mongoose.Schema({
     Stock: Number,
     Details: String,
     Similarity: Number,
-    purchaseCount: { type: Number, default: 0 },
-    viewCount: { type: Number, default: 0 },
     isOutOfStock: { type: Boolean, default: false },
     Reviews:[]
 });

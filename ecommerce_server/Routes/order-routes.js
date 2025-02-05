@@ -39,9 +39,7 @@ router.post('/order/add', async (req, res) => {
 
             const result = await products.updateOne(
                 { No, Stock: { $gte: Quantity } },
-                {
-                    $inc: { Stock: -Quantity, purchaseCount: Quantity }
-                }
+                { $inc: { Stock: -Quantity } }
             );
 
             if (result.matchedCount === 0) {
@@ -110,32 +108,6 @@ router.get('/recommendations/:email', async (req, res) => {
 
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch recommendations' });
-    }
-});
-
-router.get('/frequent-buyers', async (req, res) => {
-    try {
-        const frequentBuyers = await orders.aggregate([
-            {
-                $group: {
-                    _id: "$Email",
-                    orderCount: { $sum: 1 }
-                }
-            },
-            {
-                $project: {
-                    Email: "$_id",
-                    orderCount: 1,
-                    _id: 0
-                }
-            },
-            { $sort: { orderCount: -1 } },
-            { $limit: 10 }
-        ]);
-        res.status(200).json(frequentBuyers);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Failed to fetch frequent buyers" });
     }
 });
 

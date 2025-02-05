@@ -47,8 +47,8 @@ This is a full-stack E-commerce application built using the MERN (MongoDB, Expre
 ### Steps
 1. Clone the repository:
     ```bash
-    git clone https://github.com/dhrruvchotai/Adaa_Web.git
-    cd Adaa_Web
+    git clone https://github.com/your-username/E-Commerce.git
+    cd E-Commerce
 2. Install dependencies for the backend:
     ```bash
     cd ecommerce_server
@@ -61,7 +61,6 @@ This is a full-stack E-commerce application built using the MERN (MongoDB, Expre
     Create a .env file in the backend folder with the following:
     ```bash
     MONGO_URI=your_mongo_db_connection_string
-    PAYMENT_KEY=payment_key
 5. Start the development servers:   
       Backend:
     ```bash

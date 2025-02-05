@@ -135,7 +135,7 @@ function Login() {
                 <div className='row px-5 py-5'>
                     <div className='col'>
                         <button 
-                            className='btn-lg w-100 mybtn fw-mediumf fs-5'  
+                            className='btn-lg w-100 mybtn fw-medium fs-5'  
                             style={{ color: "white" }}
                             onClick={handleFormSubmit}
                             disabled={loading}

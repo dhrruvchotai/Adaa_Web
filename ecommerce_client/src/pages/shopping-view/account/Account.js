@@ -23,6 +23,7 @@ function ShoppingAccount() {
             const productDetails = orderItems.find(
                 (product) => product.No === item.No
             );
+
             if (productDetails) {
                 return {
                     ...item,
@@ -32,6 +33,7 @@ function ShoppingAccount() {
                 return item;
             }
         });
+
         setSelectedOrder({ ...order, enrichedItems });
     };
 
@@ -108,7 +110,7 @@ function ShoppingAccount() {
                         <p className="no-orders-text">
                             You have no orders yet.
                         </p>
-                    )}  
+                    )}
 
                     {selectedOrder && (
                         <OrderDescription
