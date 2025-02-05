@@ -1,5 +1,15 @@
 {
+  "root": "build/",
+  "clean_urls": true,
   "routes": {
-    "/*": "/index.html"
+    "/shopping/*": "/index.html",
+    "/**": "/index.html"
+  },
+  "https_only": true,
+  "headers": {
+    "/**": {
+      "Cache-Control": "no-store, no-cache",
+      "Pragma": "no-cache"
+    }
   }
 }
