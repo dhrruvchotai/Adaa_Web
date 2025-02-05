@@ -216,7 +216,7 @@ function ShoppingLayout() {
                         </ul>
                     </div>
                 </div>
-            </nav>
+            </motion.nav>
             <div style={{ marginTop: "75px" }}>
                 <Outlet />
             </div>
