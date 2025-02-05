@@ -1,5 +1,11 @@
 {
+  "root": "build/",
+  "clean_urls": true,
   "routes": {
-    "/*": "/index.html"
-  }
+    "/admin/*": "/index.html",
+    "/auth/*": "/index.html",
+    "/shopping/*": "/index.html",
+    "/**": "/index.html"
+  },
+  "https_only": true
 }

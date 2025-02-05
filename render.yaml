@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: your-app-name  # Replace with your app name
+    name: your-app-name
     env: static
     buildCommand: npm install && npm run build
     staticPublishPath: ./build
-    rewrite:
-      - from: 'https://adaa-web-frontend.onrender.com/shopping'
-        to: 'https://adaa-web-frontend.onrender.com/shopping'
-        status: 200
+    routes:
+      - type: rewrite
+        source: /.*
+        destination: /index.html
