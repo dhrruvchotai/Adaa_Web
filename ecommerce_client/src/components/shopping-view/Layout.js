@@ -96,7 +96,7 @@ function ShoppingLayout() {
                         aria-label="Toggle navigation"
                     >
                         <span className="navbar-toggler-icon"></span>
-                    </button>
+                    </motion.button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mx-auto mb-2 mb-lg-0 fs-5">
                             <li className="nav-item">
