@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, RouterProvider} from "react-router-dom";
 import { UserContext } from './pages/authorization/UserContext';
 import CheckAuthorization from "./components/common/CheckAuthorization";
 import AdminLayout from "./components/admin-view/Layout";
@@ -24,59 +24,73 @@ import Home from "./pages/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 function App() {
-    
     const { isAuthenticated, user } = useContext(UserContext);
 
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Home />,
+        },
+        {
+            path: "/auth",
+            element: (
+                <CheckAuthorization isAuthenticated={isAuthenticated} user={user}>
+                    <AuthorizationLayout />
+                </CheckAuthorization>
+            ),
+            children: [
+                { path: "login", element: <Login /> },
+                { path: "register", element: <Register /> }
+            ]
+        },
+        {
+            path: "/auth/forgot-password",
+            element: <ForgotPassword />
+        },
+        {
+            path: "/admin",
+            element: (
+                <CheckAuthorization isAuthenticated={isAuthenticated} user={user}>
+                    <AdminLayout />
+                </CheckAuthorization>
+            ),
+            children: [
+                { index: true, element: <AdminDashboard /> },
+                { path: "orders", element: <AdminOrders /> },
+                { path: "products", element: <AdminProducts /> }
+            ]
+        },
+        {
+            path: "/shopping",
+            element: (
+                <CheckAuthorization isAuthenticated={isAuthenticated} user={user}>
+                    <ShoppingLayout />
+                </CheckAuthorization>
+            ),
+            children: [
+                { index: true, element: <ShoppingHome /> },
+                { path: "account", element: <ShoppingAccount /> },
+                { path: "cart", element: <ShoppingCart /> },
+                { path: "listing", element: <ShoppingListing /> },
+                { path: "listing/:productid", element: <ShoppingProductDescription /> },
+                { path: "search", element: <ShoppingSearch /> },
+                { path: "checkout", element: <ShoppingCheckout /> },
+                { path: "wishlist", element: <WishlistPage /> }
+            ]
+        },
+        {
+            path: "*",
+            element: <NotFound />
+        }
+    ]);
+
     return (
-            <BrowserRouter>
-                <ToastContainer />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route
-                        path="/auth"
-                        element={
-                            <CheckAuthorization isAuthenticated={isAuthenticated} user={user}>
-                                <AuthorizationLayout />
-                            </CheckAuthorization>
-                        }
-                    >
-                        <Route path="/auth/login" element={<Login />} />
-                        <Route path="/auth/register" element={<Register />} />
-                    </Route>
-                    <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-                    <Route
-                        path="/admin"
-                        element={
-                            <CheckAuthorization isAuthenticated={isAuthenticated} user={user}>
-                                <AdminLayout />
-                            </CheckAuthorization>
-                        }
-                    >
-                        <Route index element={<AdminDashboard />} />
-                        <Route path="orders" element={<AdminOrders />} />
-                        <Route path="products" element={<AdminProducts />} />
-                    </Route>
-                    <Route
-                        path="/shopping"
-                        element={
-                            <CheckAuthorization isAuthenticated={isAuthenticated} user={user}>
-                                <ShoppingLayout />
-                            </CheckAuthorization>
-                        }
-                    >
-                        <Route index element={<ShoppingHome />} />
-                        <Route path="account" element={<ShoppingAccount />} />
-                        <Route path="cart" element={<ShoppingCart />} />
-                        <Route path="listing" element={<ShoppingListing />} />
-                        <Route path="listing/:productid" element={<ShoppingProductDescription />} />
-                        <Route path="search" element={<ShoppingSearch />} />
-                        <Route path="checkout" element={<ShoppingCheckout />} />
-                        <Route path="wishlist" element={<WishlistPage />} />
-                    </Route>
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </BrowserRouter>
+        <>
+            <ToastContainer />
+            <RouterProvider router={router} />
+        </>
     );
 }
 

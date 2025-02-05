@@ -2,6 +2,7 @@
   "name": "ecommerce_client",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@react-spring/web": "^9.7.5",
     "@stripe/react-stripe-js": "^3.1.1",
