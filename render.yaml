@@ -5,6 +5,6 @@ services:
     buildCommand: npm install && npm run build
     staticPublishPath: ./build
     rewrite:
-      - from: /*
-        to: /index.html
+      - from: 'https://adaa-web-frontend.onrender.com/shopping'
+        to: 'https://adaa-web-frontend.onrender.com/shopping'
         status: 200
