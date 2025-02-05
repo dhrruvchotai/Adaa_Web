@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import { BrowserRouter, Routes, Route, RouterProvider} from "react-router-dom";
 import { UserContext } from './pages/authorization/UserContext';
 import CheckAuthorization from "./components/common/CheckAuthorization";
@@ -23,6 +22,11 @@ import WishlistPage from './pages/shopping-view/wishlist/Wishlist'
 import Home from "./pages/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import React, { useContext } from "react";
+import { 
+    createBrowserRouter
+} from "react-router-dom";
+
 
 
 function App() {
