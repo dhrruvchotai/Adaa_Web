@@ -10,7 +10,8 @@ import {
     addToWishlistAPI,
     getWishlistByEmail,
     addReviewAPI,
-    getReviewsAPI
+    getReviewsAPI,
+    increaseViewCountAPI
 } from "../API";
 import Swal from "sweetalert2";
 
@@ -28,6 +29,20 @@ function ShoppingProductDescription() {
     const location = useLocation();
     const product = location.state?.product;
     const fromPage = location.state?.from || "listing";
+
+    useEffect(() => {
+        const increaseViewCount = async () => {
+          if (product?.No) {
+            try {
+              await increaseViewCountAPI(product.No);
+            } catch (error) {
+              console.error("Failed to increment view count:", error);
+            }
+          }
+        };
+    
+        increaseViewCount();
+      }, [product?.No]);
 
     useEffect(() => {
         const fetchCartAndWishlist = async () => {

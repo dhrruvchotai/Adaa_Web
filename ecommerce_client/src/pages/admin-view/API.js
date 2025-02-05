@@ -131,3 +131,49 @@ export const updateStockAPI = async (productNo, newStock) => {
         alert("An error occurred: " + error.message);
     }
 };
+
+export const getMostBoughtProducts = async () => {
+    try {
+        const response = await fetch(api+'/products/analytics/purchasecount');
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch most bought products');
+        }
+
+        const data = await response.json();
+        return data.products;
+    } catch (error) {
+        console.error('Error fetching most bought products:', error);
+        throw error;
+    }
+};
+
+export const getViewCountProducts = async () => {
+    try {
+        const response = await fetch(`${api}/products/analytics/viewcount`, {
+            method: 'GET',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Failed to fetch view count products:', error);
+        throw error;
+    }
+};
+
+export const getFrequentBuyers = async () => {
+    try {
+        const response = await fetch(`${api}/frequent-buyers`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch frequent buyers');
+        }
+        return await response.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
