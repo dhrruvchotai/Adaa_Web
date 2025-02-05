@@ -164,6 +164,9 @@ function ShoppingCheckout() {
                     updatedQuantities.splice(groupIndex, 1);
                     return updatedQuantities;
                 });
+                if(products.length==0){
+                    navigate('/shopping/cart');
+                }
             } else {
                 console.error("Failed to remove item from the cart:", response.message);
                 alert("Failed to remove the item. Please try again.");

@@ -132,7 +132,7 @@
     font-size: 1.2rem;
     color: #999;
     animation: fadeIn 1s ease-in-out;
-}
+} 
 
 /* Animations */
 @keyframes slideIn {

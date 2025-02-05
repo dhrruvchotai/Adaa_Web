@@ -167,7 +167,7 @@ function ShoppingHome() {
 
             <div className='container my-md-4 my-3 mb-5'>
                 <div className='row'>
-                    <div className='col h1 text-center text-white-important'>
+                    <div className='col h1 text-center'>
                         Shop by category
                     </div>
                 </div>

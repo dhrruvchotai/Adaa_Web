@@ -1,74 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { fetchProducts, deleteProduct, renumberProducts, updateStockAPI } from "../API";
-import Swal from 'sweetalert2';
-import ProductDescription from "../../../components/admin-view/ProductDescription";
+import { useNavigate } from "react-router-dom";
+import { fetchProducts } from "../API";
 import AddProduct from "../../../components/admin-view/AddProduct";
 import './products-style.css';
 
 function AdminProducts() {
     const [products, setProducts] = useState([]);
-    const [selectedProduct, setSelectedProduct] = useState(null);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchProducts().then(res => setProducts(res));
     }, []);
 
     const handleProductClick = (product) => {
-        setSelectedProduct(product);
-    };
-
-
-    const updateStock = async (productNo, updatedStock) => {
-
-        await updateStockAPI(productNo, updatedStock);
-        
-        setProducts(prevProducts => 
-            prevProducts.map(product => 
-                product.No === productNo 
-                    ? { ...product, Stock: updatedStock } 
-                    : product
-            )
-        );
-        setSelectedProduct(prevProduct => 
-            prevProduct.No === productNo 
-                ? { ...prevProduct, Stock: updatedStock } 
-                : prevProduct
-        );
-    };
-
-    const closeModal = () => {
-        setSelectedProduct(null);
+        navigate('/admin/products/'+product.No);
     };
 
     const onProductAdded = () => {
         fetchProducts().then(res => setProducts(res));
-    };
-
-    const deleteModal = async (id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: `You won't be able to retrieve the ${selectedProduct.Category} ${selectedProduct.Title} back!`,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                await deleteProduct(id);
-                await renumberProducts(id);
-                setProducts(prevProducts => prevProducts.filter(product => product.No !== id));
-                closeModal();
-                Swal.fire({
-                    title: 'Deleted!',
-                    text: 'The product has been deleted successfully.',
-                    icon: 'success',
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-            }
-        });
     };
 
     return (
@@ -101,15 +52,6 @@ function AdminProducts() {
                     </div>
                 ))}
             </div>
-
-            {selectedProduct && (
-                <ProductDescription
-                    selectedProduct={selectedProduct}
-                    closeModal={closeModal}
-                    deleteModal={deleteModal}
-                    updateStock={updateStock}
-                />
-            )}
 
             {isAddModalOpen && <AddProduct setIsAddModalOpen={setIsAddModalOpen} onProductAdded={onProductAdded}/>}
         </div>

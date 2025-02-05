@@ -13,25 +13,23 @@ function AdminLayout() {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes"
-        }).then((result) => {
+          }).then((result) => {
             if (result.isConfirmed) {
-                localStorage.removeItem('user');
-                sessionStorage.removeItem('user');
-                // Complete browser redirect
-                window.location.href = "https://adaa-web-frontend.onrender.com";
+                localStorage.removeItem("user");
+                window.location.href = "/";
             }
-        });
+          });
     }
-    
+
     useEffect(() => {
-        const handleBackButton = () => {
-            window.location.href = "https://adaa-web-frontend.onrender.com";
+        const handleBackButton = (event) => {
+            navigate('/', { replace: true });
         };
         window.addEventListener('popstate', handleBackButton);
         return () => {
             window.removeEventListener('popstate', handleBackButton);
         };
-    }, []);
+    }, [navigate]);
  
     return (
         <div className="container-fluid">
@@ -55,6 +53,17 @@ function AdminLayout() {
                                         })}
                                     >
                                         <i className="fa-solid fa-boxes-stacked me-3"></i>Dashboard
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item item">
+                                    <NavLink
+                                        className="nav-link link p-2 mb-1"
+                                        to="/admin/analytics"
+                                        style={({ isActive }) => ({
+                                            color: isActive ? "black" : "grey",
+                                        })}
+                                    >
+                                        <i className="bi bi-graph-up-arrow me-3"></i>Analytics
                                     </NavLink>
                                 </li>
                                 <li className="nav-item item">
@@ -104,6 +113,17 @@ function AdminLayout() {
                                             })}
                                         >
                                             <i className="fa-solid fa-boxes-stacked me-3"></i>Dashboard
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink
+                                            className="nav-link p-2 mb-1"
+                                            to="/admin/analytics"
+                                            style={({ isActive }) => ({
+                                                color: isActive ? "black" : "grey",
+                                            })}
+                                        >
+                                            <i className="bi bi-graph-up-arrow me-3"></i>Analytics
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
