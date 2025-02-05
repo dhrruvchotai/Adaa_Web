@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useUserDetails from "../../pages/useUserDetails";
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const Chatbot = ({ setIsChatbotOpen }) => {
   const [messages, setMessages] = useState([]);
@@ -95,94 +94,45 @@ const Chatbot = ({ setIsChatbotOpen }) => {
   };
 
   return (
-    <motion.div
-      className="chatbot"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ duration: 0.3 }}
-      style={{
-        position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        width: '350px',
-        maxWidth: '90%',
-        backgroundColor: '#000',
-        color: '#fff',
-        borderRadius: '15px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        overflow: 'hidden',
-        border: '2px solid white',
-      }}
-    >
-      <div className="chat-window" style={{backgroundColor : "black"}}>
-        <div className="chat-box" ref={chatBoxRef} style={{ overflowY: 'auto', maxHeight: '400px', padding: '15px'}}>
-          <AnimatePresence>
-            {messages.map((msg, index) => (
-              <motion.div
-                key={index}
-                className={`message ${msg.sender}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
+    <div className="chatbot">
+      <div className="chat-window">
+        <div className="chat-box" ref={chatBoxRef} style={{ overflowY: 'auto', maxHeight: '400px' }}>
+          {messages.map((msg, index) => (
+            <div key={index} className={`message ${msg.sender}`}>
+              <small
                 style={{
-                  marginBottom: '10px',
-                  padding: '10px',
-                  borderRadius: '10px',
-                  backgroundColor: msg.sender === 'user' ? '#333' : '#444',
-                  color: '#fff',
-                  alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
-                  maxWidth: '80%',
+                  display: 'block',
+                  fontSize: '0.75rem',
+                  color: msg.sender === 'user' ? '#007bff' : '#28a745',
+                  marginBottom: '2px',
                 }}
               >
-                <small
-                  style={{
-                    display: 'block',
-                    fontSize: '0.75rem',
-                    color: msg.sender === 'user' ? '#007bff' : '#28a745',
-                    marginBottom: '2px',
-                  }}
-                >
-                  {msg.sender === 'user' ? 'You' : 'Bot'}
-                </small>
-                {msg.text}
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                {msg.sender === 'user' ? 'You' : 'Bot'}
+              </small>
+              {msg.text}
+            </div>
+          ))}
         </div>
-        <div className="input-box" style={{ padding: '15px', borderTop: '1px solid #444' }}>
+        <div className="input-box">
           {waitingForInput ? (
-            <div className='px-3' style={{ color: '#fff' }}>Bot is analyzing...</div>
+            <div className='px-3'>Bot is analyzing...</div>
           ) : (
-            <div className="options-box" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            <div className="options-box">
               {options.length > 0 &&
                 options.map((option, index) => (
-                  <motion.button
+                  <button
                     key={index}
                     onClick={() => handleOptionClick(option)}
                     className="option-button"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    style={{
-                      padding: '10px',
-                      borderRadius: '5px',
-                      backgroundColor: '#555',
-                      color: '#fff',
-                      border: 'none',
-                      cursor: 'pointer',
-                      flex: '1 1 45%',
-                      textAlign: 'center',
-                    }}
                   >
                     {option}
-                  </motion.button>
+                  </button>
                 ))}
             </div>
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

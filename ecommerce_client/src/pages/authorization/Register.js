@@ -15,8 +15,6 @@ function Register() {
     const [emailValid, setEmailValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
     const [phoneValid, setPhoneValid] = useState(true);
-    const [loading, setLoading] = useState(false);
-
 
     const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const isValidPassword = (password) => password.length >= 6;
@@ -44,8 +42,6 @@ function Register() {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-
-        setLoading(true); 
 
         // Check if any field is empty
         if (user.Username === '' || user.Email === '' || user.Password === '' || user.Phone === '') {
@@ -231,21 +227,11 @@ function Register() {
                 {/* Submit Button */}
                 <div className='row px-5 py-5'>
                     <div className='col'>
-                        <button 
-                            className='btn-lg w-100 mybtn fw-medium fs-5'  
+                        <button
+                            className='btn btn-lg w-100 mybtn'
                             style={{ color: "white" }}
                             onClick={handleFormSubmit}
-                            disabled={loading}
-                        >
-                            {loading ? (
-                                <>
-                                    <span className="spinner-border spinner-border-sm" role="status"></span>
-                                    <span className="ms-2">Registering....</span>
-                                </>
-                            ) : (
-                                'Sign Up'
-                            )}
-                        </button>
+                        >Sign Up</button>
                     </div>
                 </div>
             </div>
