@@ -7,6 +7,7 @@
 
 .styleLeft {
     height: 98.9vh;
+    height: 98.9vh;
     text-align: center;
     border: 1px solid #333;
     background-image: url('auth_Backg.jpg');
@@ -90,8 +91,8 @@ input, button {
 }
 
 .welcome-heading {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 2.2rem !important;
+    font-weight: 600 !important;
     color: white;
     text-align: center;
 }
@@ -143,8 +144,8 @@ input, button {
 }
 
 .mybtn:hover {
-    background: rgb(68, 64, 64);
-    transform: scale(1.05);
+    opacity: 0.9;
+    transform: scale(1.01);
     box-shadow: 0 8px 16px rgba(230, 218, 214, 0.3);
 }
 
@@ -293,7 +294,9 @@ input, button {
   transform: none;
 } */
 
+
 .loading-spinner {
+  margin-bottom: 5px;
   display: inline-block;
   width: 1rem;
   height: 1rem;
