@@ -2,7 +2,6 @@
   "root": "build/",
   "clean_urls": true,
   "routes": {
-    "/shopping/*": "/index.html",
     "/**": "/index.html"
   },
   "https_only": true,
