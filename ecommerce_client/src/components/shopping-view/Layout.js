@@ -38,6 +38,8 @@ function ShoppingLayout() {
     const handleLogout = () => {
         localStorage.removeItem("user");
         window.location.href = "/";
+        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
     };
 
     const handleNavigation = (path) => {
