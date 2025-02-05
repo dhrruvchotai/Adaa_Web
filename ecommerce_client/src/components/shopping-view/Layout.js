@@ -6,6 +6,7 @@ import Chatbot from "../../components/shopping-view/Chatbot";
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import Swal from 'sweetalert2';
+import { motion } from "framer-motion";
 
 function ShoppingLayout() {
     const location = useLocation();
