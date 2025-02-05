@@ -1,10 +1,62 @@
 import './home-style.css';
+import React from "react";
+import { motion } from "framer-motion";
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchProducts, getRecommendations } from '../API';
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import ProductDescription from '../listing/ProductDescription';
 import useUserDetails from '../../useUserDetails';
+
+const SplitCardsUI = () => {
+    return (
+      <div className="flex-1 justify-center items-center h-screen bg-gray-100">
+        <div className="relative w-4/5 h-3/4 d-flex justify-content-center flex-row">
+          {/* Left Card */}
+          <motion.div
+            className="flex-1 bg-yellow-200 flex items-center justify-center relative overflow-hidden group clip-left"
+            whileHover={{ scale: 1.05 }}
+            onClick={() => window.location.href = '/shop-male'}
+          >
+            <div className="absolute top-5 left-5 text-2xl font-bold group-hover:opacity-80">SS-17</div>
+            <div className="absolute bottom-5 left-5 text-base font-medium group-hover:opacity-80">Shop ♂</div>
+            <img
+              src="Women_Card.png"
+              alt="Woman in dress"
+              className="h-3/4 z-10 group-hover:scale-105 transition-transform duration-300"
+            />
+          </motion.div>
+  
+          {/* Right Card */}
+          <motion.div
+            className="flex-1 bg-pink-200 flex items-center justify-center relative overflow-hidden group clip-right"
+            whileHover={{ scale: 1.05 }}
+            onClick={() => window.location.href = '/shop-female'}
+          >
+            <div className="absolute top-5 left-5 text-2xl font-bold group-hover:opacity-80">SS-17</div>
+            <div className="absolute bottom-5 left-5 text-base font-medium group-hover:opacity-80">Shop ♀</div>
+            <img
+              src="Men_Card.png"
+              alt="Man in shirt"
+              className="h-3/4 z-10 group-hover:scale-105 transition-transform duration-300"
+            />
+          </motion.div>
+        </div>
+  
+        <style jsx>{`
+          .clip-left {
+            clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
+          }
+  
+          .clip-right {
+            clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+            margin-left: -1px; /* To ensure the edges meet perfectly */
+          }
+        `}</style>
+      </div>
+    );
+  };
+  
 
 function ShoppingHome() {
     const [products, setProducts] = useState([]);
@@ -16,7 +68,7 @@ function ShoppingHome() {
     const { userData, isUserDataReady } = useUserDetails();
     const [orderedImages, setOrderedImages] = useState([]);
     const [loading, setLoading] = useState(true);
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBackgrounds = async () => {
@@ -40,7 +92,6 @@ function ShoppingHome() {
         };
         fetchBackgrounds();
     }, []);
-
 
     useEffect(() => {
         if (userData && userData.Email) {
@@ -165,49 +216,18 @@ function ShoppingHome() {
                 </button>
             </div>
 
+            {/* Replace the Men and Women cards with the SplitCardsUI component */}
             <div className='container my-md-4 my-3 mb-5'>
                 <div className='row'>
-                    <div className='col h1 text-center text-white-important'>
+                    <div className='col h1 text-center'>
                         Shop by category
                     </div>
                 </div>
                 <div className='row justify-content-center'>
-                    <div className='col-auto'>
-                        <Link
-                            className={`nav-link me-2 ${selectedCategory === "Male" ? "fw-bold" : ""
-                                }`}
-                            to="/shopping/listing"
-                            state={{ category: "Male" }}
-                        >
-                            <div className="card card-product mt-4" style={{ width: "16rem", cursor: "pointer" }}>
-                                <div className="card-body text-center">
-                                    <h1><i className="fa-solid fa-person"></i></h1>
-                                    <h4 className="card-title">
-                                        Men
-                                    </h4>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-                    <div className='col-auto'>
-                        <Link
-                            className={`nav-link me-2 ${selectedCategory === "Female" ? "fw-bold" : ""
-                                }`}
-                            to="/shopping/listing"
-                            state={{ category: "Female" }}
-                        >
-                            <div className="card card-product mt-4" style={{ width: "16rem", cursor: "pointer" }}>
-                                <div className="card-body text-center">
-                                    <h1><i className="fa-solid fa-person-dress"></i></h1>
-                                    <h4 className="card-title">
-                                        Women
-                                    </h4>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
+                    <SplitCardsUI />
                 </div>
             </div>
+
             <div className="container mt-5">
                 <div className="row">
                     <div className="col h1 text-center">Recommended For You</div>
@@ -333,3 +353,5 @@ function ShoppingHome() {
 }
 
 export default ShoppingHome;
+
+

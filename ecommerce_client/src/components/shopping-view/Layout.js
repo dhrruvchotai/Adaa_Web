@@ -79,10 +79,18 @@ function ShoppingLayout() {
                 <div className="container">
                     {/* Logo */}
                     <Link to="/shopping" className="navbar-brand">
-                        <motion.div>
-                            <motion.h1>Adaa</motion.h1>
+                        <motion.div
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                            style={{ width: "120px", height: "auto" }} // Adjust size
+                        >
+                            <img src='/Adaa.png' alt="Adaa Logo" style={{ width: "100%", height: "auto" }} />
                         </motion.div>
                     </Link>
+
 
                     {/* Mobile menu button */}
                     <motion.button
