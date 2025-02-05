@@ -32,7 +32,6 @@ function App() {
             <BrowserRouter>
                 <ToastContainer />
                 <Routes>
-                    <Route path="*" element={<NotFound />} />
                     <Route path="/" element={<Home />} />
                     <Route
                         path="/auth"

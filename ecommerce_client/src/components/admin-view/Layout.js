@@ -15,8 +15,8 @@ function AdminLayout() {
             confirmButtonText: "Yes"
         }).then((result) => {
             if (result.isConfirmed) {
-                localStorage.removeItem('authToken');
-                sessionStorage.removeItem('authToken');
+                localStorage.removeItem('user');
+                sessionStorage.removeItem('user');
                 // Complete browser redirect
                 window.location.href = "https://adaa-web-frontend.onrender.com";
             }
