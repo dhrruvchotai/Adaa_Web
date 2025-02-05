@@ -1,3 +1,97 @@
+body{
+  background-color: black;
+}
+
+.chatbot-container {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 400px;
+  max-width: calc(100vw - 40px);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  z-index: 2000;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .chatbot-container {
+      width: calc(100vw - 40px);
+      max-height: 80vh;
+  }
+}
+
+.navbar {
+  transition: all 0.3s ease;
+}
+
+.nav-link {
+  transition: color 0.3s ease;
+}
+
+/* .nav-link:hover {
+  color: #000 !important;
+} */
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.chatbot-container {
+  width: 400px;
+  max-width: calc(100vw - 2rem);
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+@media (max-width: 576px) {
+  .chatbot-container {
+      width: calc(100vw - 2rem);
+      max-height: 80vh;
+  }
+}
+
+/* Custom animation classes */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}
+
+/* Bootstrap overrides */
+.btn-teal {
+  background-color: #008080;
+  border-color: #008080;
+  color: white;
+}
+
+.btn-teal:hover {
+  background-color: #006666;
+  border-color: #006666;
+  color: white;
+}
+
+.navbar-nav .nav-link.active {
+  font-weight: 600;
+  color: #000;
+}
+
+
 .modal-backdrop-custom {
   background-color: rgba(0, 0, 0, 0.6);
 }
