@@ -432,7 +432,7 @@ useEffect(() => {
     };
 
     return (
-        <div className="checkout-container" style={{ padding: "30px", backgroundColor: "#fceae8" }}>
+        <div className="checkout-container" style={{ padding: "30px", backgroundColor: "black" }}>
             <div className="text-center mb-4 h1" style={{ color: "#150647" }}>Checkout</div>
             <div className="card mb-4">
                 <div className="card-body">

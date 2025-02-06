@@ -406,7 +406,7 @@ function ShoppingHome() {
             />
             <CardBody className="text-center d-flex justify-content-between mt-2" style={{height:"10vh"}}>
               <h5>{product.Title}</h5>
-              <span className="text-success fw-bold">₹{product.SalePrice}</span>
+              <span className="fw-medium" style={{color : "greenyellow"}}>₹{product.SalePrice}</span>
             </CardBody>
           </Card>
         </motion.div>
@@ -462,7 +462,7 @@ function ShoppingHome() {
             </div> */}
             <div className="container mt-5 mb-5">
   <div className="row">
-    <div className="col h1 text-center text-white-important">
+    <div className="col h1 text-center text-white-important mb-5">
       Latest Additions
     </div>
   </div>
@@ -528,7 +528,7 @@ function ShoppingHome() {
             />
             <CardBody className="text-center d-flex justify-content-between mt-2" style={{height:"10vh"}}>
               <h5>{product.Title}</h5>
-              <span className="text-success fw-bold">₹ {product.SalePrice}</span>
+              <span className="fw-medium" style={{color:"greenyellow"}}>₹ {product.SalePrice}</span>
             </CardBody>
           </Card>
         </motion.div>
@@ -551,6 +551,8 @@ function ShoppingHome() {
         height: '40px',
         cursor: 'pointer'
       }}
+
+      
     >
       <i className="fa fa-chevron-right"></i>
     </button>

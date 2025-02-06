@@ -55,7 +55,7 @@ const BusinessAnalytics = () => {
             {
                 label: 'Purchases',
                 data: products.map((product) => product.purchaseCount),
-                backgroundColor: products.map(() => `#${Math.floor(Math.random() * 16777215).toString(16)}`),
+                backgroundColor: products.map(() => `#${Math.floor(Math.random() * 1637).toString(16)}`),
                 borderColor: '#fff',
                 borderWidth: 2,
             }
@@ -153,19 +153,19 @@ const BusinessAnalytics = () => {
     return (
         <div className="analytics-container">
             <div className="row mb-3">
-                <div className="col text-center fw-bold" style={{ fontSize: "45px" }}>
+                <div className="col text-center fw-bold" style={{ fontSize: "45px",color:"white" }}>
                     Analytics
                 </div>
             </div>
             {/* Row for Pie Charts */}
             <div className="row">
                 <div className="col-md-6 chart-container">
-                    <h4>Product Purchase Analytics</h4>
+                    <h4 style={{color:"white"}}>Product Purchase Analytics</h4>
                     <div className="pie-chart-wrapper">
                         <Pie data={purchaseCountData} options={chartOptions("Purchases", products)} />
                     </div>
                 </div>
-                <div className="col-md-6 chart-container">
+                <div className="col-md-6 chart-container" style={{color:"white"}}>
                     <h4>Product View Count Analytics</h4>
                     <div className="pie-chart-wrapper">
                         <Pie data={viewCountData} options={chartOptions("Views", viewCountProducts)} />
@@ -175,9 +175,9 @@ const BusinessAnalytics = () => {
             {/* Row for Bar Chart */}
             <div className="row mt-4">
                 <div className="col-12 chart-container">
-                    <h4>Most Frequent Buyers</h4>
+                    <h4 style={{color:"white"}}>Most Frequent Buyers</h4>
                     <div className="bar-chart-wrapper">
-                        <Bar data={frequentBuyersData} options={barChartOptions} />
+                        <Bar data={frequentBuyersData} options={barChartOptions} style={{backgroundColor : "white"}}/>
                     </div>
                 </div>
             </div>

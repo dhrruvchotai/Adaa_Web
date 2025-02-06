@@ -30,9 +30,9 @@ function OrderDescription({ order, closePopup, isAdmin }) {
   };
 
   return (
-    <div className={`order-description-popup-container ${isVisible ? "visible" : "hidden"}`}>
+    <div className={`order-description-popup-container ${isVisible ? "visible" : "hidden"}`} style={{width:"120vw"}}>
       <div className="order-description-popup">
-        <button className="popup-close-btn" onClick={handleClose}>
+        <button className="popup-close-btn mt-5" onClick={handleClose}>
           &times;
         </button>
         <h3 className="order-id fs-4 mb-3">

@@ -219,12 +219,13 @@ cursor: pointer;
 
 /* Styles for the container of the div that will act like a popup */
 .order-description-popup-container {
+  height: 40%;
   display: none; /* Initially hidden */
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 18vh;
+  left: -38vw;
+  right: 5vw;
+  bottom: 20;
   background: rgba(0, 0, 0, 0.5); /* Dark background */
   z-index: 999; /* Ensure it's on top */
   justify-content: center;
@@ -243,12 +244,12 @@ cursor: pointer;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 25px;
-  background: #ffffff;
+  background: black;
   width: 52%;
   max-height: 100vh;
   overflow-y: auto;
   background-color: #f4f8f7;
-  border: 3px solid #37ab96;
+  border: 3px solid black;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
@@ -324,6 +325,7 @@ cursor: pointer;
 
 .products-table th,
 .products-table td {
+  color: black;
   padding: 12px;
   border: 1px solid #ddd;
   text-align: center;

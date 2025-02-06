@@ -50,7 +50,7 @@ function WishlistPage() {
     return (
         <div className="container py-5">
             <div className="row">
-                <h3 className="fw-bold fs-2 mt-1 mb-3">Your Wishlist</h3>
+                <h3 className="fw-medium fs-2 mt-1 mb-3" style={{color:"white"}}>Your Wishlist</h3>
                 <hr />
             </div>
             <div className="row">
@@ -67,5 +67,7 @@ function WishlistPage() {
         </div>
     );
 }
+
+
 
 export default WishlistPage;

@@ -6,6 +6,7 @@ import { removeFromCartAPI, addToCartAPI } from "../API";
 import useUserDetails from "../../useUserDetails";
 import Spinner from "../../../components/shopping-view/Spinner";
 import { motion, AnimatePresence } from "framer-motion";
+import styled from "styled-components";
 
 function ShoppingListing() {
   const [products, setProducts] = useState([]);
@@ -171,6 +172,7 @@ function ShoppingListing() {
           <motion.div
             className="col-md-2 col-0 d-none d-md-block border-end"
             style={{
+              color : "#ced4da",
               height: "100vh",
               position: "fixed",
               overflowY: "auto",
@@ -178,17 +180,17 @@ function ShoppingListing() {
               left: 0,
               zIndex: 10,
               paddingTop: "65px",
-              backgroundColor: "#fcedeb",
+              backgroundColor: "#000814",
             }}
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
             <div>
-              <h3 className="fw-bold fs-2 pt-3">Filters</h3>
+              <h3 className="fs-2 pt-3" style={{color : "white"}}>Filters</h3>
               <hr />
               <div>
-                <h5 className="fw-bold fs-5 mt-4">Popular Brands</h5>
+                <h5 className="fs-5 mt-4" style={{color : "white"}}>Popular Brands</h5>
                 <ul className="list-unstyled mt-3 ms-3">
                   {Object.keys(brandMap).map((brand) => (
                     <li className="mb-2" key={brand}>
@@ -200,7 +202,7 @@ function ShoppingListing() {
                         onChange={() => handleBrandChange(brandMap[brand])}
                         style={{ cursor: "pointer" }}
                       />
-                      <label htmlFor={brand} className="form-check-label">
+                      <label htmlFor={brand} className="fw-medium">
                         {brand}
                       </label>
                     </li>
@@ -208,7 +210,7 @@ function ShoppingListing() {
                 </ul>
               </div>
               <div>
-                <h5 className="fw-bold fs-5 mt-5">Product Types</h5>
+                <h5 className="fs-5 mt-5" style={{color:"white"}}>Product Types</h5>
                 <ul className="list-unstyled mt-3 ms-3">
                   {Object.keys(productTypeMap).map((productType) => (
                     <li className="mb-2" key={productType}>
@@ -220,7 +222,7 @@ function ShoppingListing() {
                         onChange={() => handleProductTypeChange(productTypeMap[productType])}
                         style={{ cursor: "pointer" }}
                       />
-                      <label htmlFor={productType} className="form-check-label">
+                      <label htmlFor={productType} className="fw-medium">
                         {productType}
                       </label>
                     </li>
@@ -233,7 +235,7 @@ function ShoppingListing() {
           {/* Products Grid */}
           <div className="col-md-10 offset-md-2">
             <div className="row">
-              <h3 className="fw-bold fs-2 mt-1 mb-3">All Products</h3>
+              <h3 className="fw-medium fs-2 mt-1 mb-3" style={{color : "white"}}>All Products</h3>
               <hr />
             </div>
             <div className="row">
@@ -248,9 +250,11 @@ function ShoppingListing() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                   >
+                    <Card>
                     <motion.div
-                      className="card card-product h-100 shadow-m"
-                      whileHover={{ scale: 1.05 }}
+                      className="card card-product h-100"
+                      style={{backgroundColor : "black", opacity:0.9}}
+                      whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       <img
@@ -260,14 +264,16 @@ function ShoppingListing() {
                         style={{ height: "200px", objectFit: "cover" }}
                       />
                       <div className="card-body d-flex flex-column">
-                        <h5 className="card-title">{product.Title}</h5>
-                        <p className="mb-4 text-secondary" style={{ fontSize: "17px" }}>
+                        <h5 className="fw-medium" style={{color:"White"}}>{product.Title}</h5>
+                        <div className="d-flex">
+                        <p className="mb-4" style={{ fontSize: "17px",color:"gold" }}>
                           {product.Brand}
                         </p>
-                        <p className="fw-bold mb-4">₹{product.SalePrice}</p>
+                        <p className="fw-medium mb-4 fs-5" style={{color:"greenyellow",marginLeft:"8rem"}}>₹{product.SalePrice}</p>
+                        </div>
                         {product.Stock > 0 ? (
                           isProductInCart(product.No) ? (
-                            <button
+                               <motion.button
                               className="btn btn-danger mt-auto"
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -275,17 +281,18 @@ function ShoppingListing() {
                               }}
                             >
                               Remove from Cart
-                            </button>
+                            </motion.button>
                           ) : (
-                            <button
-                              className="btn btn-primary mt-auto"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleAddToCart(product.No, product.Stock);
-                              }}
-                            >
-                              Add to Cart
-                            </button>
+                            <motion.button
+                            className="btn mt-auto"
+                            style={{backgroundColor : "#001845",color:"white"}}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAddToCart(product.No, product.Stock);
+                            }}
+                          >
+                            Add to Cart
+                          </motion.button>
                           )
                         ) : (
                           <button className="btn btn-secondary mt-auto" disabled>
@@ -294,6 +301,7 @@ function ShoppingListing() {
                         )}
                       </div>
                     </motion.div>
+                    </Card>
                   </motion.div>
                 ))
               ) : (
@@ -319,5 +327,43 @@ function ShoppingListing() {
     </div>
   );
 }
+
+const Card = styled(motion.div)`
+  background:black;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  min-height : 10vh;
+  min-width: 18rem;
+  opacity : 0.9;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  &:hover {
+    transform: scale(1.01);
+  }
+`;
+
+const CardBody = styled.div`
+  padding: 1rem;
+  text-align: center;
+`;
+
+const AddToCartButton = styled(motion.button)`
+  background-color: #333333;
+  border: none;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #444444;
+  }
+`;
 
 export default ShoppingListing;

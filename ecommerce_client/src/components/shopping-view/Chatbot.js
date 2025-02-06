@@ -3,7 +3,9 @@ import useUserDetails from "../../pages/useUserDetails";
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
+
 const Chatbot = ({ setIsChatbotOpen }) => {
+  const [inputMessage, setInputMessage] = useState(''); // Add state for user input
   const [messages, setMessages] = useState([]);
   const [options, setOptions] = useState([]);
   const [waitingForInput, setWaitingForInput] = useState(false);
@@ -94,6 +96,12 @@ const Chatbot = ({ setIsChatbotOpen }) => {
     sendMessage(option);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendMessage(inputMessage);
+  };
+
+
   return (
     <motion.div
       className="chatbot"
@@ -180,6 +188,39 @@ const Chatbot = ({ setIsChatbotOpen }) => {
                 ))}
             </div>
           )}
+
+<form onSubmit={handleSubmit} style={{ display: 'flex', marginTop: '10px' }}>
+            <input
+              type="text"
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              placeholder="Type a message..."
+              style={{
+                flex: '1',
+                padding: '10px',
+                borderRadius: '5px',
+                border: 'none',
+                backgroundColor: '#333',
+                color: '#fff',
+                marginRight: '10px',
+              }}
+            />
+            <button
+              type="submit"
+              disabled={waitingForInput}
+              style={{
+                padding: '10px',
+                borderRadius: '5px',
+                backgroundColor: '#007bff',
+                color: '#fff',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              Send
+            </button>
+          </form>
+
         </div>
       </div>
     </motion.div>

@@ -2,6 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProductByIdForWishlist } from '../../pages/shopping-view/API';
 import './style.css';
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
+
+const Card = styled(motion.div)`
+  background: black;
+  border-radius: 10px;
+  color: white;
+  min-height: 15vh;
+  min-width: 18rem;
+  opacity: 0.9;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  &:hover {
+    transform: scale(1.01);
+  }
+`;
+
 
 function ProductCard({ productId }) {
     const [product, setProduct] = useState(null);
@@ -35,21 +53,36 @@ function ProductCard({ productId }) {
 
     return (
         <div
-            className="product-card-wishlist"
             onClick={() => product && handleCardClick(product)}
             style={{ cursor: product ? 'pointer' : 'default' }}
         >
             {product ? (
-                <>
-                    <div className="product-image-wishlist">
-                        <img src={product.Image} alt={product.Title} className="img-fluid" />
-                    </div>
-                    <div className="product-details-wishlist">
-                        <h5 className="product-title-wishlist">{product.Title}</h5>
-                        <p className="product-description-wishlist">{product.Details}</p>
-                        <p className="product-price-wishlist">₹{product.SalePrice}</p>
-                    </div>
-                </>
+                 <Card 
+                className='mt-3 p-3'
+                 style={{ backgroundColor: "black", border: "1px solid grey", cursor: "pointer", height : "45vh"}}
+                 onClick={handleCardClick}
+             >
+                 <motion.div 
+                     className="card-img-top"
+                     whileHover={{ scale: 1.03 }}
+                     whileTap={{ scale: 0.95 }}
+                 >
+                     <img
+                         src={product.Image}
+                         alt={product.Title}
+                         className="img-fluid"
+                         style={{ height: "200px", objectFit: "cover", width: "100%" }}
+                     />
+                 </motion.div>
+     
+                 <div className="card-body d-flex flex-column">
+                     <h5 className="fw-medium text-white mt-4">{product.Title}</h5>
+                     <div className="d-flex justify-content-between">
+                         <p className="mb-0 text-warning" style={{ fontSize: "17px" }}>{product.Brand}</p>
+                         <p className="fw-medium fs-5 text-success mb-0">₹{product.SalePrice}</p>
+                     </div>
+                 </div>
+             </Card>
             ) : (
                 <>
                     <div className="product-image-wishlist skeleton"></div>

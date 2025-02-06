@@ -39,9 +39,9 @@ function AdminLayout() {
                 <div className="col-md-2 col-0 d-none d-md-block">
                     <div className="offcanvas offcanvas-start show" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="false">
                         <div className="offcanvas-header">
-                            <h3 className="offcanvas-title fw-bold fs-2" id="offcanvasLabel">
+                            <h4 className="offcanvas-title fw-bold fs-3" id="offcanvasLabel">
                                 <i className="fa-solid fa-chart-line me-3"></i>Admin Panel
-                            </h3>
+                            </h4>
                         </div>
                         <div className="offcanvas-body">
                             <ul className="navbar-nav nav-admin me-auto mb-2 mb-lg-0 fs-5">

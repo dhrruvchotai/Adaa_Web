@@ -185,16 +185,16 @@ function ShoppingProductDescription() {
                     />
                 </div>
                 <div className="col-md-6">
-                    <h3>{product.Title}</h3>
-                    <p>{product.Details}</p>
-                    <p className="text-secondary">
-                        Category: <span className="text-black">{product.Category}</span>
+                    <h3 style={{color:"white"}} className="fs-2">{product.Title}</h3>
+                    <p style={{color : "#6c757d"}}>{product.Details}</p>
+                    <p className="text-light fs-5 ">
+                        Category : <span className="text-light">{product.Category}</span>
                     </p>
-                    <p className="text-secondary">
-                        Brand: <span className="text-black">{product.Brand}</span>
+                    <p className="text-light">
+                        Brand : <span style={{color:"gold"}}>{product.Brand}</span>
                     </p>
-                    <p className="text-secondary">
-                        Price: <span className="text-black">₹{product.SalePrice}</span>
+                    <p className="text-light">
+                        Price : <span style={{color:"greenyellow"}}>₹{product.SalePrice}</span>
                     </p>
 
                     <div className="mt-4">
@@ -206,6 +206,7 @@ function ShoppingProductDescription() {
                                         ? "btn-secondary"
                                         : "btn-primary"
                                 }`}
+                            
                             onClick={handleAddToCartOrRemove}
                             disabled={isOutOfStock}
                         >
@@ -252,16 +253,16 @@ function ShoppingProductDescription() {
                     </div>
 
                     <div className="mt-4">
-                        <h5>Reviews:</h5>
+                        <h5 style={{color:"#fcbf49"}}>Reviews:</h5>
                         {reviews.length > 0 ? (
                             reviews.map((r, index) => (
-                                <div key={index} className="review-item">
+                                <div key={index} className="review-item text-light">
                                     <strong className="review-username">{r.username}</strong>
-                                    <p className="review-text">{r.review}</p>
+                                    <p className="review-text" style={{color:"#eae2b7"}}>{r.review}</p>
                                 </div>
                             ))
                         ) : (
-                            <p>No reviews yet. Be the first to review!</p>
+                            <p className="text-danger">No reviews yet. Be the first to review!</p>
                         )}
                     </div>
                 </div>

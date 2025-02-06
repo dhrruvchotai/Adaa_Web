@@ -7,7 +7,6 @@ import useUserDetails from "../../pages/useUserDetails";
 import { getCartByEmail } from "../../pages/shopping-view/API";
 import Chatbot from "../../components/shopping-view/Chatbot";
 import './style.css';
-import Swal from 'sweetalert2';
 
 function ShoppingLayout() {
     const location = useLocation();
@@ -46,8 +45,11 @@ function ShoppingLayout() {
 
     const handleNavigation = (path) => {
         setIsChatbotOpen(false);
-        setIsMenuOpen(false);
         navigate(path);
+        // Optional: Close menu on smaller screens
+        if (window.innerWidth < 992) {
+            setIsMenuOpen(false);
+        }
     };
 
     const isActive = (item) => {
@@ -71,13 +73,13 @@ function ShoppingLayout() {
             <motion.nav
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
-                className="navbar navbar-expand-lg fixed-top navbar-dark"
+                className="navbar navbar-expand-lg fixed-top navbar-dark mobile-navbar"
                 style={{ 
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     backdropFilter: 'blur(10px)'
                 }}
             >
-                <div className="container">
+                <div className="container-fluid px-3">
                     {/* Logo */}
                     <Link to="/shopping" className="navbar-brand">
                         <motion.div
@@ -95,7 +97,7 @@ function ShoppingLayout() {
                     {/* Mobile menu button */}
                     <motion.button
                         whileTap={{ scale: 0.95 }}
-                        className="navbar-toggler border-0"
+                        className="navbar-toggler"
                         type="button"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         aria-controls="navbarContent"
@@ -105,7 +107,11 @@ function ShoppingLayout() {
                         {isMenuOpen ? <X size={24} className="text-white" /> : <Menu size={24} className="text-white" />}
                     </motion.button>
 
-                    <div className={`navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarContent">
+                    {/* Navigation Content */}
+                    <div 
+                        className={`navbar-collapse mobile-menu ${isMenuOpen ? 'show' : ''}`} 
+                        id="navbarContent"
+                    >
                         {/* Navigation Items */}
                         <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                             {navItems.map((item) => {
@@ -140,7 +146,7 @@ function ShoppingLayout() {
                         </ul>
 
                         {/* User Actions */}
-                        <div className="d-flex align-items-center gap-3">
+                        <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3">
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                 <Link to="/shopping/cart" className="position-relative text-white">
                                     <FiShoppingBag size={30} />
@@ -158,8 +164,10 @@ function ShoppingLayout() {
 
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                 <Link to="/shopping/account" className="text-decoration-none">
-                                    <div className="bg-white rounded-circle d-flex align-items-center justify-content-center text-dark"
-                                         style={{ width: '32px', height: '32px' }}>
+                                    <div 
+                                        className="bg-white rounded-circle d-flex align-items-center justify-content-center text-dark"
+                                        style={{ width: '32px', height: '32px' }}
+                                    >
                                         {userInitial}
                                     </div>
                                 </Link>

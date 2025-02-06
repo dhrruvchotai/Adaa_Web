@@ -102,7 +102,7 @@ function AdminDashboard() {
                     <button
                         className="btn btn-primary"
                         style={{
-                            backgroundColor: "#007bff",
+                            backgroundColor: "#0d47a1",
                             color: "#fff",
                             padding: "10px 20px",
                             fontSize: "16px",
@@ -133,6 +133,7 @@ function AdminDashboard() {
                         />
                         <button
                             className="btn btn-success mt-2"
+                            style={{marginLeft:"32vw"}}
                             onClick={addBackground}
                         >
                             Submit

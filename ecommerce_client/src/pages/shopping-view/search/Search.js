@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { fetchProducts } from "../API";
 import { useNavigate } from "react-router-dom";
-import './search-style.css';
+import { motion } from "framer-motion";
+import styled from "styled-components";
+import "./search-style.css";
 
 function Search() {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
+    const navigate = useNavigate();
 
-    const navigate=useNavigate();
- 
     useEffect(() => {
         fetchProducts().then((res) => {
             setProducts(res);
@@ -19,13 +20,12 @@ function Search() {
 
     useEffect(() => {
         const results = products.filter((product) => {
-            const combinedString = (product.Title+' '+product.Details+' '+product.Brand).toLowerCase();
+            const combinedString = (product.Title + ' ' + product.Details + ' ' + product.Brand).toLowerCase();
             const searchWords = searchQuery.toLowerCase().split(" ").filter(word => word.trim() !== "");
-
             return searchWords.every(word => combinedString.includes(word));
         });
         setFilteredProducts(results);
-    }, [searchQuery, products]);    
+    }, [searchQuery, products]);
 
     const handleCardClick = (product) => {
         navigate(`/shopping/listing/${product.No}`, { state: { product, from: "search" } });
@@ -45,23 +45,37 @@ function Search() {
             <div className="search-results">
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
-                        <div
-                            className="product-card"
+                        <motion.div
+                            className="col-md-4 col-sm-6 col-lg-3 mb-4"
                             key={product.No}
                             onClick={() => handleCardClick(product)}
-                            style={{ cursor: "pointer" }}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
                         >
-                            <img
-                                src={product.Image}
-                                alt={product.Title}
-                                className="product-image"
-                            />
-                            <div className="product-info">
-                                <h5>{product.Title}</h5>
-                                <p className="product-brand text-secondary">{product.Brand}</p>
-                                <p className="product-price">₹{product.SalePrice}</p>
-                            </div>
-                        </div>
+                            <Card>
+                                <motion.div
+                                    className="card card-product h-100"
+                                    whileHover={{ scale: 1.03 }}
+                                    style={{backgroundColor : "black",borderBottom : "1px solid grey"}}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    <img
+                                        src={product.Image}
+                                        alt={product.Title}
+                                        className="card-img-top"
+                                        style={{ height: "200px", objectFit: "cover" }}
+                                    />
+                                    <div className="card-body d-flex flex-column">
+                                        <h5 className="fw-medium" style={{ color: "white" }}>{product.Title}</h5>
+                                        <div className="d-flex">
+                                            <p className="mb-4" style={{ fontSize: "17px", color: "gold" }}>{product.Brand}</p>
+                                            <p className="fw-medium mb-4 fs-5" style={{ color: "greenyellow", marginLeft: "8rem" }}>₹{product.SalePrice}</p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </Card>
+                        </motion.div>
                     ))
                 ) : (
                     <p className="no-results">No products found</p>
@@ -70,5 +84,21 @@ function Search() {
         </div>
     );
 }
+
+const Card = styled(motion.div)`
+  background: black;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  min-height: 10vh;
+  min-width: 18rem;
+  opacity: 0.9;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  &:hover {
+    transform: scale(1.01);
+  }
+`;
 
 export default Search;
