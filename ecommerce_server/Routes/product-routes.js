@@ -15,7 +15,7 @@ router.get('/products', async (req, res) => {
 
 router.get("/products/:id", async (req, res) => {
   try {
-    const product = await products.find({
+    const product = await products.findOne({
       No: req.params.id,
     });
     if (!product || product.length === 0) {
@@ -44,10 +44,12 @@ router.post('/products', async (req, res) => {
 
     const newItem = new products({
       ...otherFields,
+      purchaseCount: 0,
+      viewCount: 0,
       Title,
       No: await products.countDocuments() + 1,
       Similarity: similarityValue,
-      Reviews:[]
+      Reviews:[],
     });
 
     await newItem.save();
@@ -201,6 +203,50 @@ router.get("/:productNo/reviews", async (req, res) => {
       res.status(200).json(product.Reviews);
   } catch (error) {
       res.status(500).json({ message: "Error fetching reviews", error });
+  }
+});
+
+router.get('/products/analytics/purchasecount', async (req, res) => {
+  try {
+      const mostBoughtProducts = await products.find()
+          .sort({ purchaseCount: -1 })
+          .limit(5);
+      if (mostBoughtProducts.length === 0) {
+          return res.status(404).json({ message: 'No products found.' });
+      }
+      res.status(200).json({ message: 'Most bought products fetched successfully.', products: mostBoughtProducts });
+  } catch (error) {
+      console.error('Error fetching most bought products:', error);
+      res.status(500).json({ message: 'Failed to fetch most bought products.', error: error.message });
+  }
+});
+router.get("/products/analytics/viewcount", async (req, res) => {
+  try {
+    const product = await products.find()
+    .sort({ viewCount: -1 })
+          .limit(7);
+    if (!product || product.length === 0) {
+      return res.status(404).json({ message: "No products found" });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch products", error });
+  }
+});
+router.put("/products/increase-viewcount/:id", async (req, res) => {
+  try {
+    const product = await products.findOneAndUpdate(
+      { No: req.params.id },
+      { $inc: { viewCount: 1 } },
+      { new: true }
+    );
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (error) {
+    console.error("Failed to increment viewCount:", error);
+    res.status(500).json({ message: "Failed to increase view count", error });
   }
 });
 
