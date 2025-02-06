@@ -1,62 +1,145 @@
 import './home-style.css';
 import React from "react";
-import { motion } from "framer-motion";
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchProducts, getRecommendations } from '../API';
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import ProductDescription from '../listing/ProductDescription';
 import useUserDetails from '../../useUserDetails';
+import { ShoppingBag, ChevronRight } from 'lucide-react';
+import { ShoppingCart } from "lucide-react";
+import { motion } from "framer-motion";
+import styled from "styled-components";
+
 
 const SplitCardsUI = () => {
+    const navigate = useNavigate();
+    
     return (
-      <div className="flex-1 justify-center items-center h-screen bg-gray-100">
-        <div className="relative w-4/5 h-3/4 d-flex justify-content-center flex-row">
-          {/* Left Card */}
-          <motion.div
-            className="flex-1 bg-yellow-200 flex items-center justify-center relative overflow-hidden group clip-left"
-            whileHover={{ scale: 1.05 }}
-            onClick={() => window.location.href = '/shop-male'}
+      <div className="min-vh-100 d-flex align-items-center justify-content-center p-4" style={{opacity : 0.9}}>
+        <div className="w-100 mw-100 h-80 d-flex justify-content-center position-relative">
+          {/* Left Card - Men's Section */}
+          <motion.div 
+            className="position-relative w-50 group cursor-pointer overflow-hidden"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            whileHover={{ scale: 1.02 }}
+            onClick={() => navigate('/shopping/listing', { state: { category: "Male" } })}
+            style={{height : "60vh",borderRadius : '0.8vw'}}
           >
-            <div className="absolute top-5 left-5 text-2xl font-bold group-hover:opacity-80">SS-17</div>
-            <div className="absolute bottom-5 left-5 text-base font-medium group-hover:opacity-80">Shop ♂</div>
-            <img
-              src="Women_Card.png"
-              alt="Woman in dress"
-              className="h-3/4 z-10 group-hover:scale-105 transition-transform duration-300"
-            />
+            <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-primary-subtle transform-skew z-0" />
+            <div className="position-relative h-100 d-flex flex-column justify-content-between p-4 z-1">
+              <div>
+                <h2 className="display-4 fw-bold text-primary mb-2">Men's</h2>
+                <p className="text-primary fs-4">Spring Collection 2024</p>
+              </div>
+              
+              <img
+                src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&q=80&w=800"
+                alt="Men's Fashion"
+                className="position-absolute end-0 bottom-0 h-90 object-fit-cover transform-scale"
+                style={{height:"60vh"}}
+              />
+              
+              <motion.div 
+                className="d-flex align-items-center gap-2 text-primary fw-medium z-1"
+                whileHover={{ x: 10 }}
+              >
+                <ShoppingBag size={20} />
+                <span>Shop Men</span>
+                <ChevronRight size={20} />
+              </motion.div>
+            </div>
           </motion.div>
-  
-          {/* Right Card */}
-          <motion.div
-            className="flex-1 bg-pink-200 flex items-center justify-center relative overflow-hidden group clip-right"
-            whileHover={{ scale: 1.05 }}
-            onClick={() => window.location.href = '/shop-female'}
+          
+          {/* Right Card - Women's Section */}
+          <motion.div 
+            className="position-relative w-50 group cursor-pointer overflow-hidden"
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            whileHover={{ scale: 1.02 }}
+            style={{height : "60vh",borderRadius : '0.8vw'}}
+            onClick={() => navigate('/shopping/listing', { state: { category: "Female" } })}
           >
-            <div className="absolute top-5 left-5 text-2xl font-bold group-hover:opacity-80">SS-17</div>
-            <div className="absolute bottom-5 left-5 text-base font-medium group-hover:opacity-80">Shop ♀</div>
-            <img
-              src="Men_Card.png"
-              alt="Man in shirt"
-              className="h-3/4 z-10 group-hover:scale-105 transition-transform duration-300"
-            />
+            <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-danger-subtle transform-neg-skew z-0" />
+            <div className="position-relative h-100 d-flex flex-column justify-content-between p-4 z-1">
+              <div>
+                <h2 className="display-4 fw-bold text-danger mb-2">Women's</h2>
+                <p className="text-danger fs-4">Spring Collection 2024</p>
+              </div>
+              
+              <img
+                src="https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?auto=format&fit=crop&q=80&w=800"
+                alt="Women's Fashion"
+                className="position-absolute end-0 bottom-0 h-90 object-fit-cover transform-scale"
+                style={{height:"70vh", width : "20vw"}}
+              />
+              
+              <motion.div 
+                className="d-flex align-items-center gap-2 text-danger fw-medium z-1"
+                whileHover={{ x: 10 }}
+              >
+                <ShoppingBag size={20} />
+                <span>Shop Women</span>
+                <ChevronRight size={20} />
+              </motion.div>
+            </div>
           </motion.div>
+          
+    
         </div>
-  
-        <style jsx>{`
-          .clip-left {
-            clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
-          }
-  
-          .clip-right {
-            clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
-            margin-left: -1px; /* To ensure the edges meet perfectly */
-          }
-        `}</style>
       </div>
     );
-  };
+};
+
+// Add custom CSS for missing Bootstrap equivalents
+const customStyles = `
+<style>
+  .h-80 {
+    height: 80vh;
+  }
   
+  .h-90 {
+    height: 90%;
+  }
+  
+  .transform-skew {
+    transform: skewX(6deg);
+    transform-origin: top right;
+  }
+  
+  .transform-neg-skew {
+    transform: skewX(-6deg);
+    transform-origin: top left;
+  }
+  
+  .transform-scale {
+    transition: transform 0.5s;
+  }
+  
+  .group:hover .transform-scale {
+    transform: scale(1.05);
+  }
+  
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  
+  .gap-2 {
+    gap: 0.5rem;
+  }
+  
+  .z-0 {
+    z-index: 0;
+  }
+  
+  .z-1 {
+    z-index: 1;
+  }
+</style>
+`;
 
 function ShoppingHome() {
     const [products, setProducts] = useState([]);
@@ -217,22 +300,23 @@ function ShoppingHome() {
             </div>
 
             {/* Replace the Men and Women cards with the SplitCardsUI component */}
-            <div className='container my-md-4 my-3 mb-5'>
+            <div className='container my-md-4 my-3' >
                 <div className='row'>
-                    <div className='col h1 text-center text-white-important'>
-                        Shop by category
+                    <div className='col h1 text-center text-white-important mt-5'>
+                        Shop by Category
+
                     </div>
                 </div>
-                <div className='row justify-content-center'>
+                <div className='row justify-content-center' style={{marginTop : "-13vh"}}>
                     <SplitCardsUI />
                 </div>
             </div>
-
-            <div className="container mt-5">
+{/* 
+            <div className="container" style={{marginTop : "-10vh"}}>
                 <div className="row">
-                    <div className="col h1 text-center">Recommended For You</div>
+                    <div className="col h1 text-center text-white-important mb-5">Recommended For You</div>
                 </div>
-                <div className="slider-container position-relative">
+                <div className="slider-container position-relative" style={{marginTop : "1vh"}}>
                     <button className="slider-btn slider-btn-left" onClick={() => scrollLeft(recommendedSliderRef)}>
                         <i className="fa fa-chevron-left"></i>
                     </button>
@@ -290,67 +374,257 @@ function ShoppingHome() {
                         closeModal={closeModal}
                     />
                 )}
+            </div> */}
+            <div className="container mb-5" style={{ marginTop: "-10vh" }}>
+  <div className="row">
+    <div className="col h1 text-center text-white-important mb-5">
+      Recommended For You
+    </div>
+  </div>
+  <div className="slider-container position-relative" style={{ marginTop: "1vh" }}>
+    <button className="slider-btn slider-btn-left" onClick={() => recommendedSliderRef.current.scrollBy({ left: -300, behavior: "smooth" })}>
+      <i className="fa fa-chevron-left"></i>
+    </button>
+    <div className="horizontal-slider" ref={recommendedSliderRef}>
+      {recommendedProducts.map((product, index) => (
+        <motion.div 
+          key={index}
+          className="mx-3"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.1 }}
+          style={{ minWidth: "18rem", cursor: "pointer" }}
+          onClick={() => handleCardClick(product)}
+        >
+          <Card>
+            <motion.img
+              src={product.Image}
+              alt={product.Title}
+              style={{ width: "100%", height: "50vh", objectFit: "cover", padding: '1rem', borderRadius : "20px"}}
+              whileHover={{ rotate: [-1, 1, -1], transition: { repeat: Infinity, duration: 1 } }}
+            />
+            <CardBody className="text-center d-flex justify-content-between mt-2" style={{height:"10vh"}}>
+              <h5>{product.Title}</h5>
+              <span className="text-success fw-bold">₹{product.SalePrice}</span>
+            </CardBody>
+          </Card>
+        </motion.div>
+      ))}
+    </div>
+    <button className="slider-btn slider-btn-right" onClick={() => recommendedSliderRef.current.scrollBy({ left: 300, behavior: "smooth" })}>
+      <i className="fa fa-chevron-right"></i>
+    </button>
+  </div>
             </div>
-            <div className="container mt-5">
-                <div className="row">
-                    <div className="col h1 text-center">Latest Additions</div>
-                </div>
-                <div className="slider-container position-relative">
-                    <button className="slider-btn slider-btn-left" onClick={() => scrollLeft(latestSliderRef)}>
-                        <i className="fa fa-chevron-left"></i>
-                    </button>
-                    <div
-                        className="horizontal-slider"
-                        ref={latestSliderRef}
-                        onScroll={() => handleScroll(latestSliderRef, setProducts, products)}
-                    >
-                        {products.map((product, index) => (
-                            <div
-                                className="card h-100 shadow-lg border-0 mx-3"
-                                key={index}
-                                style={{
-                                    cursor: "pointer",
-                                    minWidth: "18rem",
-                                    transition: "transform 0.3s, box-shadow 0.3s",
-                                }}
-                                onClick={() => handleCardClick(product)}
-                                onMouseEnter={(e) =>
-                                    (e.currentTarget.style.transform = "scale(1.1)")
-                                }
-                                onMouseLeave={(e) =>
-                                    (e.currentTarget.style.transform = "scale(1)")
-                                }
-                            >
-                                <img
-                                    src={product.Image}
-                                    className="card-img-top"
-                                    alt={product.Title}
-                                    style={{
-                                        width: "100%",
-                                        height: "20vh",
-                                        objectFit: "cover",
-                                        borderRadius: "10px 10px 0 0",
-                                    }}
-                                />
-                                <div className="card-body text-center">
-                                    <h5 className="card-title fw-bold text-primary">
-                                        {product.Title}
-                                    </h5>
-                                    <p className="card-text fs-5 text-dark">
-                                        Price: <span className="text-success">{product.SalePrice}</span>
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <button className="slider-btn slider-btn-right" onClick={() => scrollRight(latestSliderRef)}>
-                        <i className="fa fa-chevron-right"></i>
-                    </button>
-                </div>
+
+            {/* <div className="container mt-5 mb-5">
+  <div className="row">
+    <div className="col h1 text-center text-white-important">
+      Latest Additions
+    </div>
+  </div>
+  <div className="slider-container position-relative" style={{ marginTop: "1vh" }}>
+    <button className="slider-btn slider-btn-left" onClick={() => latestSliderRef.current.scrollBy({ left: -300, behavior: "smooth" })}>
+      <i className="fa fa-chevron-left"></i>
+    </button>
+    <div className="horizontal-slider" ref={latestSliderRef}>
+      {products.map((product, index) => (
+        <motion.div 
+          key={index}
+          className="mx-3"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.1 }}
+          style={{ minWidth: "18rem", cursor: "pointer" }}
+          onClick={() => handleCardClick(product)}
+        >
+          <Card>
+            <motion.img
+              src={product.Image}
+              alt={product.Title}
+              style={{ width: "100%", height: "50vh", objectFit: "cover", padding: '1rem', borderRadius : "20px"}}
+              whileHover={{ rotate: [-1, 1, -1], transition: { repeat: Infinity, duration: 1 } }}
+            />
+            <CardBody className="text-center d-flex justify-content-between mt-2" style={{height:"10vh"}}>
+              <h5>{product.Title}</h5>
+              <span className="text-success fw-bold">₹ {product.SalePrice}</span>
+            </CardBody>
+          </Card>
+        </motion.div>
+      ))}
+    </div>
+    <button className="slider-btn slider-btn-right" onClick={() => latestSliderRef.current.scrollBy({ left: 300, behavior: "smooth" })}>
+      <i className="fa fa-chevron-right"></i>
+    </button>
+  </div>
+            </div> */}
+            <div className="container mt-5 mb-5">
+  <div className="row">
+    <div className="col h1 text-center text-white-important">
+      Latest Additions
+    </div>
+  </div>
+  <div className="slider-container position-relative" style={{ marginTop: "1vh" }}>
+    <button 
+      className="slider-btn slider-btn-left" 
+      onClick={() => latestSliderRef.current.scrollBy({ left: -300, behavior: "smooth" })}
+      style={{
+        position: 'absolute',
+        left: '0',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        zIndex: '10',
+        background: 'rgba(0,0,0, 0.5)',
+        border: 'none',
+        borderRadius: '50%',
+        width: '40px',
+        height: '40px',
+        cursor: 'pointer'
+      }}
+    >
+      <i className="fa fa-chevron-left"></i>
+    </button>
+    
+    <div 
+      className="horizontal-slider" 
+      ref={latestSliderRef}
+      style={{
+        display: 'flex',
+        overflowX: 'auto',
+        scrollBehavior: 'smooth',
+        msOverflowStyle: 'none',  // Hide scrollbar IE and Edge
+        scrollbarWidth: 'none',   // Hide scrollbar Firefox
+        '&::-webkit-scrollbar': { display: 'none' }  // Hide scrollbar Chrome
+      }}
+    >
+      {products.map((product, index) => (
+        <motion.div
+          key={index}
+          className="mx-3"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.1 }}
+          style={{ minWidth: "18rem", cursor: "pointer" }}
+          onClick={() => handleCardClick(product)}
+        >
+          <Card>
+            <motion.img
+              src={product.Image}
+              alt={product.Title}
+              style={{ 
+                width: "100%", 
+                height: "50vh", 
+                objectFit: "cover", 
+                padding: '1rem', 
+                borderRadius: "20px"
+              }}
+              whileHover={{ 
+                rotate: [-1, 1, -1], 
+                transition: { repeat: Infinity, duration: 1 } 
+              }}
+            />
+            <CardBody className="text-center d-flex justify-content-between mt-2" style={{height:"10vh"}}>
+              <h5>{product.Title}</h5>
+              <span className="text-success fw-bold">₹ {product.SalePrice}</span>
+            </CardBody>
+          </Card>
+        </motion.div>
+      ))}
+    </div>
+    
+    <button 
+      className="slider-btn slider-btn-right"
+      onClick={() => latestSliderRef.current.scrollBy({ left: 300, behavior: "smooth" })}
+      style={{
+        position: 'absolute',
+        right: '0',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        zIndex: '10',
+        background: 'rgba(0,0,0, 0.5)',
+        border: 'none',
+        borderRadius: '50%',
+        width: '40px',
+        height: '40px',
+        cursor: 'pointer'
+      }}
+    >
+      <i className="fa fa-chevron-right"></i>
+    </button>
+  </div>
             </div>
+
+{/* Add this CSS to your stylesheet */}
+<style>
+{`
+  .slider-container {
+    position: relative;
+    padding: 0 20px;
+  }
+
+  .horizontal-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;  /* Hide scrollbar IE and Edge */
+    scrollbar-width: none;  /* Hide scrollbar Firefox */
+  }
+
+  .horizontal-slider::-webkit-scrollbar {
+    display: none; /* Hide scrollbar Chrome */
+  }
+
+  .slider-btn {
+    transition: all 0.3s ease;
+  }
+
+`}
+</style>
         </>
     );
 }
+
+const Card = styled(motion.div)`
+  background:black;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  min-height : 10vh;
+  min-width: 18rem;
+  opacity : 0.9;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  &:hover {
+    transform: scale(1.01);
+  }
+`;
+
+const CardBody = styled.div`
+  padding: 1rem;
+  text-align: center;
+`;
+
+const AddToCartButton = styled(motion.button)`
+  background-color: #333333;
+  border: none;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #444444;
+  }
+`;
+
 
 export default ShoppingHome;
 

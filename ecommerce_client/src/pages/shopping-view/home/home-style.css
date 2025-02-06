@@ -2,6 +2,38 @@
     height: 90vh;
 }
 
+.horizontal-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  
+  .slider-container {
+    position: relative;
+  }
+  
+  .slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .slider-btn-left {
+    left: 0;
+  }
+  
+  .slider-btn-right {
+    right: 0;
+  }
+  
 .text-white-important {
     color: white !important;
 }

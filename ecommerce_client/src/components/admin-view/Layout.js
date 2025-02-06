@@ -60,6 +60,17 @@ function AdminLayout() {
                                 <li className="nav-item item">
                                     <NavLink
                                         className="nav-link link p-2 mb-1"
+                                        to="/admin/analytics"
+                                        style={({ isActive }) => ({
+                                            color: isActive ? "black" : "grey",
+                                        })}
+                                    >
+                                        <i className="bi bi-graph-up-arrow me-3"></i>Analytics
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item item">
+                                    <NavLink
+                                        className="nav-link link p-2 mb-1"
                                         to="/admin/products"
                                         style={({ isActive }) => ({
                                             color: isActive ? "black" : "grey",

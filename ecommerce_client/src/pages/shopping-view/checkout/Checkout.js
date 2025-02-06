@@ -112,27 +112,60 @@ function ShoppingCheckout() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (isUserDataReady && userData?.Email) {
-            const fetchCartProducts = async () => {
-                try {
-                    const user = await getCartByEmail(userData.Email);
-                    const productIds = user?.Cart || [];
-                    const products = await Promise.all(
-                        productIds.map(async (id) => {
-                            const product = await getProductById(id);
-                            return product;
-                        })
-                    );
-                    setCart(products);
-                    setQuantity(products.flat().map(() => 1));
-                } catch (error) {
-                    console.error("Failed to fetch cart products:", error);
+    // useEffect(() => {
+    //     if (isUserDataReady && userData?.Email) {
+    //         const fetchCartProducts = async () => {
+    //             try {
+    //                 const user = await getCartByEmail(userData.Email);
+    //                 const productIds = user?.Cart || [];
+    //                 const products = await Promise.all(
+    //                     productIds.map(async (id) => {
+    //                         const product = await getProductById(id);
+    //                         return product;
+    //                     })
+    //                 );
+    //                 setCart(products);
+    //                 setQuantity(products.flat().map(() => 1));
+    //             } catch (error) {
+    //                 console.error("Failed to fetch cart products:", error);
+    //             }
+    //         };
+    //         fetchCartProducts();
+    //     }
+    // }, [isUserDataReady, userData?.Email]);
+
+    
+useEffect(() => {
+    if (isUserDataReady && userData?.Email) {
+        const fetchCartProducts = async () => {
+            try {
+                const user = await getCartByEmail(userData.Email);
+                const productIds = user?.Cart || [];
+
+                // Ensure productIds is an array
+                if (!Array.isArray(productIds)) {
+                    console.error("Cart data is not an array:", productIds);
+                    return;
                 }
-            };
-            fetchCartProducts();
-        }
-    }, [isUserDataReady, userData?.Email]);
+
+                // Fetch product details for each product ID
+                const products = await Promise.all(
+                    productIds.map(async (id) => {
+                        const product = await getProductById(id);
+                        return product;
+                    })
+                );
+
+                // Set cart as an array of arrays (groups of products)
+                setCart([products]); // Wrap products in an array to match the expected structure
+                setQuantity(products.map(() => 1)); // Initialize quantities for each product
+            } catch (error) {
+                console.error("Failed to fetch cart products:", error);
+            }
+        };
+        fetchCartProducts();
+    }
+}, [isUserDataReady, userData?.Email]);
 
     useEffect(() => {
         const totalAmount = cart.reduce((total, group) => {
@@ -146,19 +179,51 @@ function ShoppingCheckout() {
         setFinalTotal(discountedTotal + shipping);
     }, [cart, shipping, discount]);
 
+    // const handleRemoveItem = async (groupIndex, productId) => {
+    //     try {
+    //         const response = await removeFromCartAPI(userData.Email, productId);
+    //         if (response.success) {
+    //             const user = await getCartByEmail(userData.Email);
+    //             const productIds = user?.Cart || [];
+    //             const products = await Promise.all(
+    //                 productIds.map(async (id) => {
+    //                     const product = await getProductById(id);
+    //                     return product;
+    //                 })
+    //             );
+    //             setCart(products);
+    //             setQuantity((prevQuantities) => {
+    //                 const updatedQuantities = [...prevQuantities];
+    //                 updatedQuantities.splice(groupIndex, 1);
+    //                 return updatedQuantities;
+    //             });
+    //         } else {
+    //             console.error("Failed to remove item from the cart:", response.message);
+    //             alert("Failed to remove the item. Please try again.");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error removing item from the cart:", error);
+    //         alert("Something went wrong. Please try again later.");
+    //     }
+    // };
+
     const handleRemoveItem = async (groupIndex, productId) => {
         try {
             const response = await removeFromCartAPI(userData.Email, productId);
             if (response.success) {
                 const user = await getCartByEmail(userData.Email);
                 const productIds = user?.Cart || [];
+    
+                // Fetch updated product details
                 const products = await Promise.all(
                     productIds.map(async (id) => {
                         const product = await getProductById(id);
                         return product;
                     })
                 );
-                setCart(products);
+    
+                // Update cart and quantity state
+                setCart([products]); // Wrap products in an array
                 setQuantity((prevQuantities) => {
                     const updatedQuantities = [...prevQuantities];
                     updatedQuantities.splice(groupIndex, 1);
@@ -173,7 +238,7 @@ function ShoppingCheckout() {
             alert("Something went wrong. Please try again later.");
         }
     };
-
+    
     const handleQuantityChange = (index, newQuantity) => {
         if (newQuantity < 1) return;
 
@@ -385,6 +450,93 @@ function ShoppingCheckout() {
                                     <th style={{ width: "120px" }}>Action</th>
                                 </tr>
                             </thead>
+                            {/* <tbody>
+                                {cart.map((group, groupIndex) =>
+                                    group.map((product, productIndex) => {
+                                        const globalIndex = groupIndex * group.length + productIndex;
+                                        return (
+                                            <tr key={`${groupIndex}-${productIndex}`} style={{ cursor: "pointer" }}>
+                                                <td>
+                                                    <div
+                                                        style={{
+                                                            display: "flex",
+                                                            justifyContent: "center",
+                                                            alignItems: "center",
+                                                        }}
+                                                    >
+                                                        <img
+                                                            src={product.Image || "default-image-path.jpg"}
+                                                            alt={product.Title || "Product Image"}
+                                                            style={{
+                                                                width: "60px",
+                                                                height: "60px",
+                                                                objectFit: "cover",
+                                                                borderRadius: "5px",
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </td>
+                                                <td>{product.Title}</td>
+                                                <td>{product.Category}</td>
+                                                <td>
+                                                    <div
+                                                        style={{
+                                                            display: "flex",
+                                                            justifyContent: "center",
+                                                            alignItems: "center",
+                                                        }}
+                                                    >
+                                                        <button
+                                                            className="btn btn-sm btn-outline-secondary"
+                                                            onClick={() => handleQuantityChange(globalIndex, quantity[globalIndex] - 1)}
+                                                        >
+                                                            -
+                                                        </button>
+                                                        <input
+                                                            type="text"
+                                                            readOnly
+                                                            value={quantity[globalIndex]}
+                                                            style={{
+                                                                width: "50px",
+                                                                textAlign: "center",
+                                                                margin: "0 10px",
+                                                                border: "1px solid #ddd",
+                                                                borderRadius: "5px",
+                                                            }}
+                                                        />
+                                                        <button
+                                                            className="btn btn-sm btn-outline-secondary"
+                                                            onClick={() => handleQuantityChange(globalIndex, quantity[globalIndex] + 1)}
+                                                        >
+                                                            +
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td>₹{product.SalePrice}</td>
+                                                <td>₹{(product.SalePrice * quantity[globalIndex]).toFixed(2)}</td>
+                                                <td>
+                                                    <div
+                                                        style={{
+                                                            display: "flex",
+                                                            justifyContent: "center",
+                                                            alignItems: "center",
+                                                        }}
+                                                    >
+                                                        <button
+                                                            className="btn btn-danger"
+                                                            onClick={() => handleRemoveItem(groupIndex, product.No)}
+                                                        >
+                                                            Remove
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                )}
+                            </tbody> */}
+
+                            
                             <tbody>
                                 {cart.map((group, groupIndex) =>
                                     group.map((product, productIndex) => {

@@ -98,7 +98,7 @@ const Chatbot = ({ setIsChatbotOpen }) => {
     <motion.div
       className="chatbot"
       initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
+      animate={{ opacity: 0.97, scale: 1 }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ duration: 0.3 }}
       style={{
@@ -109,10 +109,10 @@ const Chatbot = ({ setIsChatbotOpen }) => {
         maxWidth: '90%',
         backgroundColor: '#000',
         color: '#fff',
-        borderRadius: '15px',
+        borderRadius: '10px',
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
-        border: '2px solid white',
+        border: '1px solid white',
       }}
     >
       <div className="chat-window" style={{backgroundColor : "black"}}>

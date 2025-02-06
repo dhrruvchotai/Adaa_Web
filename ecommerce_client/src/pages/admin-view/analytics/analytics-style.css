@@ -1,0 +1,58 @@
+/* Page container */
+.analytics-container {
+    font-family: 'Arial', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+/* Header */
+.analytics-header {
+    text-align: center; 
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+.analytics-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.chart-container {
+    flex: 1;
+    text-align: center;
+}
+.chart-container h3 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 10px;
+}
+.pie-chart-wrapper {
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+.bar-chart-wrapper {
+    height: 400px; /* Adjust height as needed */
+}
+/* Loading & Error Styles */
+.loading,
+.error {
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 50px;
+}
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    .analytics-content {
+        flex-direction: column; /* Stack sections vertically */
+        align-items: center;
+    }
+    .chart-container {
+        width: 100%;
+    }
+    .pie-chart-wrapper {
+        max-width: 400px;
+    }
+}

@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route, RouterProvider} from "react-router-dom";
+import { BrowserRouter, Routes, Route, RouterProvider } from "react-router-dom";
 import { UserContext } from './pages/authorization/UserContext';
 import CheckAuthorization from "./components/common/CheckAuthorization";
+import AdminProductDescription from "./pages/admin-view/products/ProductDescription";
+import BusinessAnalytics from "./pages/admin-view/analytics/Analytics";
 import AdminLayout from "./components/admin-view/Layout";
 import AuthorizationLayout from "./components/authorization/Layout";
 import ShoppingLayout from "./components/shopping-view/Layout";
@@ -17,17 +19,13 @@ import ShoppingListing from "./pages/shopping-view/listing/Listing";
 import ShoppingProductDescription from "./pages/shopping-view/listing/ProductDescription";
 import ShoppingSearch from "./pages/shopping-view/search/Search";
 import ShoppingCheckout from "./pages/shopping-view/checkout/Checkout";
-import ForgotPassword from './pages/authorization/ForgotPassword'
-import WishlistPage from './pages/shopping-view/wishlist/Wishlist'
+import ForgotPassword from './pages/authorization/ForgotPassword';
+import WishlistPage from './pages/shopping-view/wishlist/Wishlist';
 import Home from "./pages/Home";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useContext } from "react";
-import { 
-    createBrowserRouter
-} from "react-router-dom";
-
-
+import { createBrowserRouter } from "react-router-dom";
 
 function App() {
     const { isAuthenticated, user } = useContext(UserContext);
@@ -63,7 +61,9 @@ function App() {
             children: [
                 { index: true, element: <AdminDashboard /> },
                 { path: "orders", element: <AdminOrders /> },
-                { path: "products", element: <AdminProducts /> }
+                { path: "products", element: <AdminProducts /> },
+                { path: "products/:id", element: <AdminProductDescription /> },
+                { path: "analytics", element: <BusinessAnalytics /> }
             ]
         },
         {
