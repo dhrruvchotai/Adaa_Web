@@ -121,7 +121,7 @@ function ShoppingListing() {
     filterProducts(selectedProductTypes, updatedBrands);
   };
 
-  const filterProducts = (updatedProductTypes, updatedBrands, minPrice, maxPrice) => {
+  const filterProducts = (updatedProductTypes, updatedBrands) => {
     setFilteredProducts(
       products.filter((product) => {
         const matchesBrand = updatedBrands.length === 0 || updatedBrands.includes(product.Brand);
@@ -129,12 +129,11 @@ function ShoppingListing() {
           updatedProductTypes.length === 0 || updatedProductTypes.includes(product.Title);
         const matchesCategory =
           selectedCategories.length === 0 || selectedCategories.includes(product.Category);
-        const matchesPrice = product.SalePrice >= minPrice && product.SalePrice <= maxPrice;
 
-        return matchesBrand && matchesProductType && matchesCategory && matchesPrice;
-      })
-    );
-  };
+        return matchesBrand && matchesProductType && matchesCategory;
+      })
+    );
+  };
 
   const handleCardClick = (product) => {
     navigate(`/shopping/listing/${product.No}`, { state: { product } });
@@ -178,12 +177,6 @@ function ShoppingListing() {
     setProductIds(updatedCart);
   };
 
-  const handlePriceChange = (min, max) => {
-    setMinPrice(min);
-    setMaxPrice(max);
-    filterProducts(selectedProductTypes, selectedBrands, min, max);
-  };
-
   return (
     <div className="container-fluid">
       {loading ? (
@@ -213,33 +206,6 @@ function ShoppingListing() {
             <div>
               <h3 className="fs-2 pt-3" style={{color : "white"}}>Filters</h3>
               <hr />
-              <div>
-                <h5 className="fs-5 mt-4" style={{ color: "white" }}>Price Range</h5>
-                <div className="d-flex flex-column">
-                  <label className="text-light mt-2" htmlFor="minPrice">Min Price</label>
-                  <input
-                    type="number"
-                    id="minPrice"
-                    className="form-control mb-2"
-                    value={minPrice}
-                    onChange={(e) => handlePriceChange(Number(e.target.value), maxPrice)}
-                    min="0"
-                    max="10000"
-                    step="100"
-                  />
-                  <label className="text-light mt-2" htmlFor="maxPrice">Max Price</label>
-                  <input
-                    type="number"
-                    id="maxPrice"
-                    className="form-control"
-                    value={maxPrice}
-                    onChange={(e) => handlePriceChange(minPrice, Number(e.target.value))}
-                    min="0"
-                    max="10000"
-                    step="100"
-                  />
-                </div>
-              </div>
               <div>
                 <h5 className="fs-5 mt-4" style={{color : "white"}}>Popular Brands</h5>
                 <ul className="list-unstyled mt-3 ms-3">
@@ -364,8 +330,6 @@ function ShoppingListing() {
               )}
             </div>
           </div>
-
-
         </div>
       )}
 
