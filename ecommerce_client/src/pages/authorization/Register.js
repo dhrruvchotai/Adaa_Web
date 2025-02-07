@@ -19,8 +19,38 @@ function Register() {
 
 
     const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const isValidPassword = (password) => password.length >= 6;
     const isValidPhone = (phone) => /^[0-9]{10}$/.test(phone);
+
+    const [passwordError, setPasswordError] = useState("");
+    
+    const isValidPassword = (password) => {
+        if (password.length < 6) {
+            setPasswordError("Password must be at least 6 characters long.");
+            return false;
+        } else if (!/[A-Z]/.test(password)) {
+            setPasswordError("Password must contain at least one uppercase letter.");
+            return false;
+        } else if (!/[a-z]/.test(password)) {
+            setPasswordError("Password must contain at least one lowercase letter.");
+            return false;
+        } else if (!/\d/.test(password)) {
+            setPasswordError("Password must contain at least one digit.");
+            return false;
+        } else if (!/[@$!%*?&]/.test(password)) {
+            setPasswordError("Password must contain at least one special character (@$!%*?&).");
+            return false;
+        }
+
+        // ✅ Clear the error when all conditions are met
+        setPasswordError("");
+        return true;
+    };
+
+    const handlePasswordChange = (e) => {
+        const password = e.target.value;
+        setUser((prev) => ({ ...prev, Password: password }));
+        isValidPassword(password);
+    };
 
     const navigate = useNavigate();
 
@@ -30,11 +60,7 @@ function Register() {
         setEmailValid(isValidEmail(email));
     };
 
-    const handlePasswordChange = (e) => {
-        const password = e.target.value;
-        setUser((prev) => ({ ...prev, Password: password }));
-        setPasswordValid(isValidPassword(password));
-    };
+
 
     const handlePhoneChange = (e) => {
         const phone = e.target.value;
@@ -199,11 +225,11 @@ function Register() {
                             onChange={handlePasswordChange}
                             onKeyDown={handleKeyDown}
                         />
-                        {!passwordValid && (
+                       {passwordError && (
                             <div className='text-start text-danger'>
-                                The length of password must be at least 6 characters!
+                                {passwordError}
                             </div>
-                        )}
+                        )}
                     </div>
                 </div>
 
