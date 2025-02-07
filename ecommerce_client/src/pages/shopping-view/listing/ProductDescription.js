@@ -181,7 +181,7 @@ function ShoppingProductDescription() {
                         src={product.Image}
                         alt={product.Title}
                         className="img-fluid"
-                        style={{ height: "100%", objectFit: "cover" }}
+                        style={{ height: "100%", objectFit: "cover",maxWidth :"450px"}}
                     />
                 </div>
                 <div className="col-md-6">
