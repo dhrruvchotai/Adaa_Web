@@ -9,8 +9,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import styled from "styled-components";
 
 function ShoppingListing() {
-  const [minPrice, setMinPrice] = useState(10);  // Minimum price input
-  const [maxPrice, setMaxPrice] = useState(10000);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -59,21 +57,6 @@ function ShoppingListing() {
           return acc;
         }, {});
 
-        const filterProducts = (updatedProductTypes, updatedBrands, minPrice, maxPrice) => {
-          setFilteredProducts(
-            products.filter((product) => {
-              const matchesBrand = updatedBrands.length === 0 || updatedBrands.includes(product.Brand);
-              const matchesProductType =
-                updatedProductTypes.length === 0 || updatedProductTypes.includes(product.Title);
-              const matchesCategory =
-                selectedCategories.length === 0 || selectedCategories.includes(product.Category);
-              const matchesPrice = product.SalePrice >= minPrice && product.SalePrice <= maxPrice;
-      
-              return matchesBrand && matchesProductType && matchesCategory && matchesPrice;
-            })
-          );
-        };
-
         const filteredBrands = Object.keys(brandCount)
           .filter((brand) => brandCount[brand] > 5)
           .reduce((obj, brand) => {
@@ -109,7 +92,7 @@ function ShoppingListing() {
       : [...selectedProductTypes, productType];
 
     setSelectedProductTypes(updatedProductTypes);
-    filterProducts(updatedProductTypes, selectedBrands);
+    filterProducts(updatedProductTypes, selectedBrands, minPrice, maxPrice);
   };
 
   const handleBrandChange = (brand) => {
@@ -118,19 +101,42 @@ function ShoppingListing() {
       : [...selectedBrands, brand];
 
     setSelectedBrands(updatedBrands);
-    filterProducts(selectedProductTypes, updatedBrands);
+    filterProducts(selectedProductTypes, updatedBrands, minPrice, maxPrice);
   };
 
-  const filterProducts = (updatedProductTypes, updatedBrands) => {
+  const [minPrice, setMinPrice] = useState(Number(10));  // Minimum price input
+  const [maxPrice, setMaxPrice] = useState(Number(3000));
+
+  const handlePriceChange = (min, max) => {
+    setMinPrice(min);
+    setMaxPrice(max);
+    filterProducts(selectedProductTypes, selectedBrands, min, max);
+  };
+
+  const filterProducts = (updatedProductTypes, updatedBrands, minPrice, maxPrice) => {
+
+    if(minPrice===undefined){
+      setMinPrice(Number(10));
+    }
+
+    if(maxPrice===undefined){
+      setMaxPrice(Number(3000));
+    }
     setFilteredProducts(
       products.filter((product) => {
-        const matchesBrand = updatedBrands.length === 0 || updatedBrands.includes(product.Brand);
+        // Condition to check if product matches the selected brands
+        const matchesBrand =
+          updatedBrands.length === 0 || updatedBrands.includes(product.Brand);
+  
+        // Condition to check if product matches the selected product types
         const matchesProductType =
           updatedProductTypes.length === 0 || updatedProductTypes.includes(product.Title);
-        const matchesCategory =
-          selectedCategories.length === 0 || selectedCategories.includes(product.Category);
-
-        return matchesBrand && matchesProductType && matchesCategory;
+  
+        // Condition to check if product falls within the selected price range
+        const matchesPrice = product.SalePrice >= minPrice && product.SalePrice <= maxPrice;
+  
+        // Product must match all filters (brand, product type, and price)
+        return matchesBrand && matchesProductType && matchesPrice;
       })
     );
   };
@@ -207,6 +213,33 @@ function ShoppingListing() {
               <h3 className="fs-2 pt-3" style={{color : "white"}}>Filters</h3>
               <hr />
               <div>
+                <h5 className="fs-5 mt-4" style={{ color: "white" }}>Price Range</h5>
+                <div className="d-flex flex-column">
+                  <label className="text-light mt-2" htmlFor="minPrice">Min Price</label>
+                  <input
+                    type="number"
+                    id="minPrice"
+                    className="form-control mb-2"
+                    value={minPrice}
+                    onChange={(e) => handlePriceChange(Number(e.target.value), maxPrice)}
+                    min={0}
+                    max={3000}
+                    step="100"
+                  />
+                  <label className="text-light mt-2" htmlFor="maxPrice">Max Price</label>
+                  <input
+                    type="number"
+                    id="maxPrice"
+                    className="form-control"
+                    value={maxPrice}
+                    onChange={(e) => handlePriceChange(minPrice, Number(e.target.value))}
+                    min={0}
+                    max={10000}
+                    step="100"
+                  />
+                </div>
+              </div>
+              <div>
                 <h5 className="fs-5 mt-4" style={{color : "white"}}>Popular Brands</h5>
                 <ul className="list-unstyled mt-3 ms-3">
                   {Object.keys(brandMap).map((brand) => (
@@ -246,10 +279,8 @@ function ShoppingListing() {
                   ))}
                 </ul>
               </div>
-                
             </div>
           </motion.div>
-          
 
           {/* Products Grid */}
           <div className="col-md-10 offset-md-2">
@@ -263,7 +294,7 @@ function ShoppingListing() {
                   <motion.div
                     className="col-md-4 col-sm-6 col-lg-3 mb-4"
                     key={product.No}
-                    style={{ cursor: "pointer",marginLeft : "50px"}}
+                    style={{ cursor: "pointer" }}
                     onClick={() => handleCardClick(product)}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
