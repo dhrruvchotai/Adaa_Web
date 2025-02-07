@@ -72,7 +72,7 @@ function ShoppingCart() {
                         <CartIcon className="me-3" size={32} />
                         Shopping Cart
                     </h1>
-                    <span className="badge bg-primary rounded-pill fs-5">
+                    <span className="badge rounded-pill fs-5" style={{backgroundColor : "#00ff95"}}>
                         {cartProducts.length} items
                     </span>
                 </div>
@@ -117,7 +117,7 @@ function ShoppingCart() {
                         </div>
                         <div className="cart-summary-container w-75 mt-4">
                             <div className="cart-summary p-3">
-                                <h3>Order Summary</h3>
+                                {/* <h3>Order Summary</h3>
                                 <div className="summary-item">
                                     <span>Subtotal</span>
                                     <span>₹{calculateTotal().toLocaleString()}</span>
@@ -133,7 +133,7 @@ function ShoppingCart() {
                                 <div className="summary-item summary-total">
                                     <span>Total</span>
                                     <span>₹{(calculateTotal() * 1.18).toLocaleString()}</span>
-                                </div>
+                                </div> */}
                                 <button
                                     className="proceed-to-buy-btn w-100 mt-3"
                                     onClick={() => navigate('/shopping/checkout')}

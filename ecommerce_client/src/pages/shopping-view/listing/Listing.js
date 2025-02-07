@@ -244,7 +244,7 @@ function ShoppingListing() {
                   <motion.div
                     className="col-md-4 col-sm-6 col-lg-3 mb-4"
                     key={product.No}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer",marginLeft : "50px"}}
                     onClick={() => handleCardClick(product)}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

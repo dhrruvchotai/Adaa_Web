@@ -96,6 +96,7 @@ function AdminOrders() {
                     order={selectedOrder}
                     closePopup={closePopup}
                     isAdmin={isAdmin}
+                    style={{}}
                 />
             )}
         </div>
