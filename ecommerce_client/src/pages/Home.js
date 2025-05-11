@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { useSprings, animated } from '@react-spring/web';
 import { useEffect, useRef, useState } from 'react';
-import './Home.css'; // Import the CSS file for animations and styles
+import './Home.css';
 
 const SplitText = ({
   text = '',
